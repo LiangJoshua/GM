@@ -13,6 +13,7 @@ class DraftingPage extends Component {
   initialize = this.initialize.bind(this);
 
   initialize() {
+    /*
     let drafted = [];
     drafted.push(
       <p style={{ fontSize: 50, color: "blue" }}>Currently Drafted</p>
@@ -20,7 +21,7 @@ class DraftingPage extends Component {
     this.props.draftedPlayers.forEach(player => {
       drafted.push(<img className="ProfilePic" src={player[1]} alt="logo" />);
       drafted.push(<p>{player[0]}</p>);
-    });
+    });*/
 
     let profile = [];
     profile.push(
@@ -42,6 +43,8 @@ class DraftingPage extends Component {
     profile.push(
       <p style={{ fontSize: 20 }}>Win rate: {this.props.winRate}</p>
     );
+
+    /*
 
     let players = [];
     // players.push(<p style={{ fontSize: 50, color: "orangered" }}>Players</p>);
@@ -79,6 +82,7 @@ class DraftingPage extends Component {
       userProfile: profile,
       playerLists: players
     });
+   */
   }
 
   componentDidMount() {
@@ -93,7 +97,6 @@ class DraftingPage extends Component {
         <Grid container direction="column">
           <div style={{ textAlign: "center", color: "orangered" }}>
             <h1>Draft Players</h1>
-            {playerLists}
           </div>
           <div>
             <Grid container direction="row">

@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-// import axios from "axios";
-
-// import logo from "./logo.svg";
 
 import "./App.css";
 import "./DraftingPage";
@@ -48,17 +45,11 @@ class App extends Component {
 
   handleClose = event => {
     console.log(event.nativeEvent.target.outerText);
-    this.setState({ anchorEl: null, drafting: true });
+    this.setState({
+      anchorEl: null,
+      drafting: true
+    });
   };
-
-  /*
-  <DraftingPage
-    user={["Faith Chau", "/FaithChau.jpeg"]}
-    winRate="30%"
-    draftedPlayers={draftedPlayers}
-    playerLists={draftedPlayers}
-  />
-  */
 
   render() {
     const { anchorEl } = this.state;
@@ -107,8 +98,6 @@ class App extends Component {
             <DraftingPage
               user={["Faith Chau", "/FaithChau.jpeg"]}
               winRate="30%"
-              draftedPlayers={draftedPlayers}
-              playerLists={draftedPlayers}
             />
           )}
         </div>
@@ -116,14 +105,5 @@ class App extends Component {
     );
   }
 }
-const draftedPlayers = [
-  ["Lebrom James", "/LebronJames.png"],
-  ["Stephen Curry", "/StephenCurry.png"],
-  ["Jimmy Butler", "/JimmyButler.png"],
-  ["Kemba Walker", "/KembaWalker.png"],
-  ["Luka Doncic", "/LukaDoncic.png"],
-  ["Lou Williams", "/LouWilliams.png"],
-  ["James Harden", "/JamesHarden.png"],
-  ["Kyrie Irving", "KyrieIrving.png"]
-];
+
 export default App;
