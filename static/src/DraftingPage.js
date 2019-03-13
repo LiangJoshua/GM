@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid";
 
 import "./App.css";
 
@@ -7,7 +7,7 @@ class DraftingPage extends Component {
   state = {
     draftedPlayers: [],
     playerLists: [],
-    userProfile: [],
+    userProfile: []
   };
 
   initialize = this.initialize.bind(this);
@@ -23,10 +23,25 @@ class DraftingPage extends Component {
     });
 
     let profile = [];
-    profile.push(<div><img key="NBA" src={'/NBA.jpg'} alt="logo" style={{ width: 114, height: 75 }} /></div>);
-    profile.push(<div><img className="UserPic" src={this.props.user[1]} alt="logo" /></div>);
+    profile.push(
+      <div>
+        <img
+          key="NBA"
+          src={"/NBA.jpg"}
+          alt="logo"
+          style={{ width: 114, height: 75 }}
+        />
+      </div>
+    );
+    profile.push(
+      <div>
+        <img className="UserPic" src={this.props.user[1]} alt="logo" />
+      </div>
+    );
     profile.push(<p className="username">{this.props.user[0]}</p>);
-    profile.push(<p style={{ fontSize: 20 }}>Win rate: {this.props.winRate}</p>);
+    profile.push(
+      <p style={{ fontSize: 20 }}>Win rate: {this.props.winRate}</p>
+    );
 
     let players = [];
     // players.push(<p style={{ fontSize: 50, color: "orangered" }}>Players</p>);
@@ -39,11 +54,19 @@ class DraftingPage extends Component {
         players.push(
           <Grid container direction="row" justify="space-evenly">
             <div>
-              <img className="ProfilePic" src={this.props.playerLists[i][1]} alt="logo" />
+              <img
+                className="ProfilePic"
+                src={this.props.playerLists[i][1]}
+                alt="logo"
+              />
               <p>{this.props.playerLists[i][0]}</p>
             </div>
             <div>
-              <img className="ProfilePic" src={this.props.playerLists[i + 1][1]} alt="logo" />
+              <img
+                className="ProfilePic"
+                src={this.props.playerLists[i + 1][1]}
+                alt="logo"
+              />
               <p>{this.props.playerLists[i + 1][0]}</p>
             </div>
           </Grid>
@@ -51,11 +74,10 @@ class DraftingPage extends Component {
       }
     }
 
-
     this.setState({
       draftedPlayers: drafted,
       userProfile: profile,
-      playerLists: players,
+      playerLists: players
     });
   }
 
@@ -75,14 +97,11 @@ class DraftingPage extends Component {
           </div>
           <div>
             <Grid container direction="row">
-              <div className="DraftingPage">
-                {userProfile}
-              </div>
+              <div className="DraftingPage">{userProfile}</div>
               <div className="Playerlist">{draftedPlayers}</div>
             </Grid>
           </div>
         </Grid>
-
       </div>
     );
   }
