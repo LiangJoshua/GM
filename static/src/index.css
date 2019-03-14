@@ -12,3 +12,45 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.DraftingPage {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+}
+
+.Playerlist {
+  position: absolute;
+  top: 20px;
+  right: 80px;
+  font-size: 30px;
+  width: auto;
+  height: auto;
+  text-align: center;
+}
+
+.ProfilePic {
+  max-width: 130px;
+  /* max-height: 95px;
+  width: auto; */
+  height: auto;
+}
+
+.UserPic {
+  max-width: 115px;
+  /* max-height: 115px;
+  width: auto; */
+  height: auto;
+  border: 5 solid brown;
+}
+
+.title {
+  position: absolute;
+  top: 0;
+  left: 40%;
+  color: orangered;
+}
+
+.username {
+  font-size: 30px;
+}
