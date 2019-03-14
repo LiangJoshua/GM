@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemText from "@material-ui/core/ListItemText";
+import Avatar from "@material-ui/core/Avatar";
 
 import "./App.css";
+import { players } from "./constants/players.js";
 
 class DraftingPage extends Component {
   state = {
@@ -93,19 +99,52 @@ class DraftingPage extends Component {
     let { draftedPlayers, userProfile, playerLists } = this.state;
 
     return (
-      <div>
-        <Grid container direction="column">
-          <div style={{ textAlign: "center", color: "orangered" }}>
-            <h1>Draft Players</h1>
-          </div>
-          <div>
-            <Grid container direction="row">
-              <div className="DraftingPage">{userProfile}</div>
-              <div className="Playerlist">{draftedPlayers}</div>
-            </Grid>
-          </div>
-        </Grid>
-      </div>
+      <Grid
+        container
+        direction="row"
+        alignItems="stretch"
+        justify="space-between"
+      >
+        <div>
+          <p>hi</p>
+        </div>
+
+        <div>
+          <Grid container direction="row">
+            <div style={{ textAlign: "center", color: "orangered" }}>
+              <h1>Draft Players</h1>
+              <List
+                component="nav"
+                style={{
+                  maxHeight: 300,
+                  overflow: "auto"
+                }}
+              >
+                {players.map(p => {
+                  return (
+                    <ListItem button>
+                      <ListItemAvatar>
+                        <Avatar src={p.img} />
+                      </ListItemAvatar>
+                      <ListItemText primary={p.name} />
+                    </ListItem>
+                  );
+                })}
+              </List>
+            </div>
+            <div>
+              <Grid container direction="row">
+                <div className="DraftingPage">{userProfile}</div>
+                <div className="Playerlist">{draftedPlayers}</div>
+              </Grid>
+            </div>
+          </Grid>
+        </div>
+
+        <div>
+          <p>hi</p>
+        </div>
+      </Grid>
     );
   }
 }
