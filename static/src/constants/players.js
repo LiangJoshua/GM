@@ -1,6 +1,6 @@
 export const players = [
   {
-    name: "Lebrom James",
+    name: "Lebron James",
     img: require("../img/LebronJames.png")
   },
   {

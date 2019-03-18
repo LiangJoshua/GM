@@ -15,7 +15,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
-import {players} from "./constants/players";
+import { players } from "./constants/players";
 
 const rootStyle = {
   flexGrow: 1,
@@ -94,13 +94,10 @@ class App extends Component {
               </Typography>
               <Button color="secondary" variant="contained">
                 Sign up
-              </Button>>
+              </Button>
             </div>
           ) : (
-            <DraftingPage
-              user={["Faith Chau", "/FaithChau.jpeg"]}
-              winRate="30%"
-            />
+            <DraftingPage />
           )}
         </div>
       </MuiThemeProvider>

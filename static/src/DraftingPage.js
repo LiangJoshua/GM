@@ -1,148 +1,134 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
+
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import ExpansionPanelActions from "@material-ui/core/ExpansionPanelActions";
+
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
 
 import "./App.css";
 import { players } from "./constants/players.js";
 
 class DraftingPage extends Component {
   state = {
-    draftedPlayers: [],
-    playerLists: [],
-    userProfile: []
+    draftedPlayers: []
   };
 
-  initialize = this.initialize.bind(this);
-
-  initialize() {
-    /*
-    let drafted = [];
-    drafted.push(
-      <p style={{ fontSize: 50, color: "blue" }}>Currently Drafted</p>
-    );
-    this.props.draftedPlayers.forEach(player => {
-      drafted.push(<img className="ProfilePic" src={player[1]} alt="logo" />);
-      drafted.push(<p>{player[0]}</p>);
-    });*/
-
-    let profile = [];
-    profile.push(
-      <div>
-        <img
-          key="NBA"
-          src={"/NBA.jpg"}
-          alt="logo"
-          style={{ width: 114, height: 75 }}
-        />
-      </div>
-    );
-    profile.push(
-      <div>
-        <img className="UserPic" src={this.props.user[1]} alt="logo" />
-      </div>
-    );
-    profile.push(<p className="username">{this.props.user[0]}</p>);
-    profile.push(
-      <p style={{ fontSize: 20 }}>Win rate: {this.props.winRate}</p>
-    );
-
-    /*
-
-    let players = [];
-    // players.push(<p style={{ fontSize: 50, color: "orangered" }}>Players</p>);
-    // this.props.playerLists.forEach(player => {
-    //   players.push(<p>{player}</p>)
-    // });
-    let length = this.props.playerLists.length;
-    if (length % 2 === 0) {
-      for (let i = 0; i < length; i += 2) {
-        players.push(
-          <Grid container direction="row" justify="space-evenly">
-            <div>
-              <img
-                className="ProfilePic"
-                src={this.props.playerLists[i][1]}
-                alt="logo"
-              />
-              <p>{this.props.playerLists[i][0]}</p>
-            </div>
-            <div>
-              <img
-                className="ProfilePic"
-                src={this.props.playerLists[i + 1][1]}
-                alt="logo"
-              />
-              <p>{this.props.playerLists[i + 1][0]}</p>
-            </div>
-          </Grid>
-        );
-      }
-    }
-
-    this.setState({
-      draftedPlayers: drafted,
-      userProfile: profile,
-      playerLists: players
-    });
-   */
-  }
-
-  componentDidMount() {
-    this.initialize();
-  }
-
   render() {
-    let { draftedPlayers, userProfile, playerLists } = this.state;
-
     return (
       <Grid
         container
         direction="row"
         alignItems="stretch"
-        justify="space-between"
+        justify="space-evenly"
       >
-        <div>
-          <p>hi</p>
-        </div>
-
         <div>
           <Grid container direction="row">
             <div style={{ textAlign: "center", color: "orangered" }}>
               <h1>Draft Players</h1>
-              <List
-                component="nav"
-                style={{
-                  maxHeight: 300,
-                  overflow: "auto"
-                }}
-              >
+              <div>
                 {players.map(p => {
-                  return (
-                    <ListItem button>
-                      <ListItemAvatar>
+                  return !this.state.draftedPlayers.includes(p.name) ? (
+                    <ExpansionPanel>
+                      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                         <Avatar src={p.img} />
-                      </ListItemAvatar>
-                      <ListItemText primary={p.name} />
-                    </ListItem>
-                  );
+
+                        <Typography>{p.name} </Typography>
+                      </ExpansionPanelSummary>
+                      <ExpansionPanelDetails>
+                        <Typography>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Suspendisse malesuada lacus ex, sit amet blandit
+                          leo lobortis eget.
+                        </Typography>
+                      </ExpansionPanelDetails>
+                      <Divider />
+                      <ExpansionPanelActions>
+                        <Button size="small">Learn More</Button>
+                        <Button
+                          size="small"
+                          color="primary"
+                          variant="contained"
+                          onClick={() => {
+                            this.setState({
+                              draftedPlayers: this.state.draftedPlayers.concat(
+                                p.name
+                              )
+                            });
+                          }}
+                        >
+                          Draft
+                        </Button>
+                      </ExpansionPanelActions>
+                    </ExpansionPanel>
+                  ) : null;
                 })}
-              </List>
-            </div>
-            <div>
-              <Grid container direction="row">
-                <div className="DraftingPage">{userProfile}</div>
-                <div className="Playerlist">{draftedPlayers}</div>
-              </Grid>
+              </div>
             </div>
           </Grid>
         </div>
 
         <div>
-          <p>hi</p>
+          <Grid container direction="column" justify="space-evenly">
+            <div style={{ textAlign: "center" }}>
+              <h1>Your Players</h1>
+
+              {this.state.draftedPlayers.map(drafted => {
+                const playerInfo = players.find(
+                  player => player.name == drafted
+                );
+
+                return (
+                  <Card style={{ marginTop: 10 }}>
+                    <div
+                      style={{ textAlign: "center", display: "inline-block" }}
+                    >
+                      <Avatar
+                        src={playerInfo.img}
+                        style={{
+                          width: 60,
+                          height: 60
+                        }}
+                      />
+                    </div>
+                    <CardContent>
+                      <Typography color="textSecondary">
+                        {playerInfo.name}
+                      </Typography>
+                    </CardContent>
+                    <CardActions
+                      style={{ textAlign: "center", display: "inline-block" }}
+                    >
+                      <Button
+                        size="small"
+                        color="secondary"
+                        variant="contained"
+                        onClick={() => {
+                          this.setState({
+                            draftedPlayers: this.state.draftedPlayers.filter(
+                              p => p != playerInfo.name
+                            )
+                          });
+                        }}
+                      >
+                        Remove
+                      </Button>
+                    </CardActions>
+                  </Card>
+                );
+              })}
+            </div>
+          </Grid>
         </div>
       </Grid>
     );
