@@ -81,7 +81,7 @@ class DraftingPage extends Component {
         <div>
           <Grid container direction="column" justify="space-evenly">
             <div style={{ textAlign: "center" }}>
-              <h1>Your Players</h1>
+              <h1 style={{ color: "#FFF" }}>Your Players</h1>
 
               {this.state.draftedPlayers.map(drafted => {
                 const playerInfo = players.find(
