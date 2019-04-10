@@ -19,22 +19,22 @@ champsData = data1.drop(['Team', 'Year', 'Game'], axis=1)
 runnersData = data2.drop(['Team', 'Year', 'Game'], axis=1)
 
 #Exclude all rows before year 2013
-champsData = champsData.iloc[188:]
-runnersData = runnersData.iloc[188:]
+champsData = champsData.iloc[186:]
+runnersData = runnersData.iloc[186:]
 
 # save features as pandas dataframe for stepwise feature selection
 champsX1 = champsData.drop(champsData.columns[0], axis = 1)
-champsY1 = champsData.drop(champsData.columns[0:20], axis = 1)
+champsY1 = champsData.drop(champsData.columns[1:21], axis = 1)
 runnersX1 = runnersData.drop(runnersData.columns[0], axis = 1)
-runnersY1 = runnersData.drop(runnersData.columns[0:20], axis = 1)
+runnersY1 = runnersData.drop(runnersData.columns[1:21], axis = 1)
 
 # separate features and response into two different arrays
 champsArray = champsData.values
-champsX = champsArray[:,0:20]
+champsX = champsArray[:,1:21]
 champsY = champsArray[:,0]
 
 runnersArray = runnersData.values
-runnersX = runnersArray[:,0:20]
+runnersX = runnersArray[:,1:21]
 runnersY = runnersArray[:,0]
 # stepwise forward-backward selection
 # need to change the input types as X in this function needs to be a pandas
@@ -97,7 +97,7 @@ print(runnersResult)
 # Determiniation of dominant features , Method one Recursive Model Elimination,
 # very similar idea to foreward selection but done recurssively. This method is gready
 # which means it tries one feature at the time
-NUM_FEATURES = 6
+NUM_FEATURES = 4
 # this is kind of arbitrary but the idea should come by observing the scatter plots and correlation.
 model = LinearRegression()
 rfe = RFE(model, NUM_FEATURES)
