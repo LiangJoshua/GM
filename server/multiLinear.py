@@ -17,10 +17,10 @@ data2 = pd.read_csv(runnersFile)
 #as Team)
 champsData = data1.drop(['Team', 'Year', 'Game'], axis=1)
 runnersData = data2.drop(['Team', 'Year', 'Game'], axis=1)
+champsData.dropna(inplace=True)
+runnersData.dropna(inplace=True)
 
-#Exclude all rows before year 2013
-champsData = champsData.iloc[186:]
-runnersData = runnersData.iloc[186:]
+
 
 # save features as pandas dataframe for stepwise feature selection
 champsX1 = champsData.drop(champsData.columns[0], axis = 1)
@@ -80,6 +80,12 @@ def stepwise_selection(X, y,
         # use all coefs except intercept
         pvalues = model.pvalues.iloc[1:]
         worst_pval = pvalues.max()  # null if pvalues is empty
+        if worst_pval > threshold_out:
+            changed = True
+            worst_feature = pvalues.argmax()
+            included.remove(worst_feature)
+            if verbose:
+                print('Drop {:30} with p-value {:.6}'.format(worst_feature, worst_pval))
         if not changed:
             break
     return included
@@ -97,7 +103,7 @@ print(runnersResult)
 # Determiniation of dominant features , Method one Recursive Model Elimination,
 # very similar idea to foreward selection but done recurssively. This method is gready
 # which means it tries one feature at the time
-NUM_FEATURES = 4
+NUM_FEATURES = 16
 # this is kind of arbitrary but the idea should come by observing the scatter plots and correlation.
 model = LinearRegression()
 rfe = RFE(model, NUM_FEATURES)
@@ -118,3 +124,11 @@ champsScore = rfe.score(champsX,champsY)
 runnersScore = rfe.score(runnersX,runnersY)
 print("Model Champs Score with selected features is: ", champsScore)
 print("Model Runer up Score with selected features is: ", runnersScore)
+
+"""
+Results:
+
+Run in terminal to see results. Not very good because these 2 datasets
+are more of a classification model. Linear Regression is not very good here.
+
+"""
