@@ -26,11 +26,42 @@ const titleStyle = {
   paddingBottom: 100
 };
 
+const stats = {
+  "Pos": "SF",
+  "Age": 34,
+  "Tm": "LAL",
+  "G": 39,
+  "GS": 39,
+  "MP": 34.9,
+  "FG": 9.8,
+  "FGA": 19.2,
+  "FG%": 0.513,
+  "3P": 2.1,
+  "3PA": 5.8,
+  "3P%": 0.355,
+  "2P": 7.7,
+  "2PA": 13.3,
+  "2P%": 0.582,
+  "eFG%": 0.567,
+  "FT": 5.1,
+  "FTA": 7.4,
+  "FT%": 0.679,
+  "ORB": 0.9,
+  "DRB": 7.7,
+  "TRB": 8.6,
+  "AST": 7.6,
+  "STL": 1.3,
+  "BLK": 0.6,
+  "TOV": 3.5,
+  "PF": 1.7,
+  "PS/G": 26.8
+}
+
 function PlayerInfoPage(props) {
   const { classes } = props;
   return (
     <Grid container direction="column">
-      <Avatar src={players[0].img} className={classes.bigAvatar} />
+      <Avatar src="static/media/LebronJames.f72fec00.png" className={classes.bigAvatar} />
       <Typography variant="h1" style={titleStyle}>{players[0].name}</Typography>
     </Grid>
   );

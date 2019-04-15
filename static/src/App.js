@@ -40,7 +40,7 @@ class App extends Component {
   state = {
     anchorEl: null,
     drafting: false,
-    profiling: false,
+    profiling: true,
   };
 
   handleClick = event => {
