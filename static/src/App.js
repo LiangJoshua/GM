@@ -15,7 +15,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
-import {players} from "./constants/players";
+import { players } from "./constants/players";
+import PlayerInfoPage from "./playerInfoPage";
 
 const rootStyle = {
   flexGrow: 1,
@@ -38,18 +39,29 @@ const theme = createMuiTheme({
 class App extends Component {
   state = {
     anchorEl: null,
-    drafting: false
+    drafting: false,
+    profiling: false,
   };
 
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleClose = event => {
+  handleDrafting = event => {
     console.log(event.nativeEvent.target.outerText);
     this.setState({
       anchorEl: null,
-      drafting: true
+      drafting: true,
+      profiling: false,
+    });
+  };
+
+  handleProfile = event => {
+    console.log(event.nativeEvent.target.outerText);
+    this.setState({
+      anchorEl: null,
+      drafting: false,
+      profiling: true
     });
   };
 
@@ -73,11 +85,11 @@ class App extends Component {
                   id="simple-menu"
                   anchorEl={anchorEl}
                   open={Boolean(anchorEl)}
-                  onClose={this.handleClose}
+                  onClose={this.handleDrafting}
                 >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>Drafting</MenuItem>
-                  <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                  <MenuItem onClick={this.handleProfile}>Profile</MenuItem>
+                  <MenuItem onClick={this.handleDrafting}>Drafting</MenuItem>
+                  <MenuItem onClick={this.handleDrafting}>Logout</MenuItem>
                 </Menu>
               </div>
               <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
@@ -87,20 +99,21 @@ class App extends Component {
             </Toolbar>
           </AppBar>
 
-          {!this.state.drafting ? (
+          {!this.state.drafting ? 
+            !this.state.profiling ? (
             <div align="center">
               <Typography variant="h1" style={titleStyle}>
                 Sign-up now to Play!
               </Typography>
               <Button color="secondary" variant="contained">
                 Sign up
-              </Button>>
+              </Button>
             </div>
-          ) : (
-            <DraftingPage
-              user={["Faith Chau", "/FaithChau.jpeg"]}
-              winRate="30%"
-            />
+          ) : <PlayerInfoPage /> : (
+              <DraftingPage
+                user={["Faith Chau", "/FaithChau.jpeg"]}
+                winRate="30%"
+              />
           )}
         </div>
       </MuiThemeProvider>
