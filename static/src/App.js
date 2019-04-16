@@ -15,7 +15,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
-import { players } from "./constants/players";
+// import { players } from "./constants/players";
 import PlayerInfoPage from "./playerInfoPage";
 
 const rootStyle = {

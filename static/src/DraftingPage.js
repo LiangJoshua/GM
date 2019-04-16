@@ -90,7 +90,7 @@ class DraftingPage extends Component {
   }
 
   render() {
-    let { draftedPlayers, userProfile, playerLists } = this.state;
+    let { draftedPlayers, userProfile, /*playerLists*/ } = this.state;
 
     return (
       <div>
