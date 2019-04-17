@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import gmApp from "./reducers";
 
 import "./App.css";
-import "./DraftingPage";
+import Home from "./Home";
 import DraftingPage from "./DraftingPage";
 
 import AppBar from "@material-ui/core/AppBar";
@@ -17,17 +20,12 @@ import Drawer from "@material-ui/core/Drawer";
 
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
-import { players } from "./constants/players";
+const store = createStore(gmApp);
 
 const rootStyle = {
   flexGrow: 1,
   backgroundColor: "#282c34",
   backgroundRepeat: "repeat",
-  paddingBottom: 100
-};
-
-const titleStyle = {
-  paddingTop: 100,
   paddingBottom: 100
 };
 
@@ -40,24 +38,18 @@ const theme = createMuiTheme({
 class App extends Component {
   state = {
     anchorEl: false,
-    drafting: false
+    selectedTab: "Home"
   };
 
   handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
+    this.setState({ anchorEl: true });
   };
 
   handleClose = event => {
     console.log(event.nativeEvent.target.outerText);
     this.setState({
       anchorEl: false,
-      drafting: true
-    });
-  };
-
-  toggleDrawer = () => {
-    this.setState({
-      anchorEl: false
+      selectedTab: event.nativeEvent.target.outerText
     });
   };
 
@@ -65,53 +57,53 @@ class App extends Component {
     const { anchorEl } = this.state;
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <div style={rootStyle}>
-          <AppBar position="static">
-            <Toolbar>
-              <div>
-                <IconButton
+      <Provider store={store}>
+        <MuiThemeProvider theme={theme}>
+          <div style={rootStyle}>
+            <AppBar position="static">
+              <Toolbar>
+                <div>
+                  <IconButton
+                    color="inherit"
+                    aria-label="Menu"
+                    onClick={this.handleClick}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                  <Drawer
+                    open={this.state.anchorEl}
+                    onClose={this.toggleDrawer}
+                  >
+                    <List style={{ width: 250, color: "#FFFF" }}>
+                      <ListItem button onClick={this.handleClose}>
+                        Profile
+                      </ListItem>
+                      <ListItem button onClick={this.handleClose}>
+                        Drafting
+                      </ListItem>
+                      <ListItem button onClick={this.handleClose}>
+                        Logout
+                      </ListItem>
+                    </List>
+                  </Drawer>
+                </div>
+                <Typography
+                  variant="h6"
                   color="inherit"
-                  aria-label="Menu"
-                  onClick={this.handleClick}
+                  style={{ flexGrow: 1 }}
                 >
-                  <MenuIcon />
-                </IconButton>
-                <Drawer open={this.state.anchorEl} onClose={this.toggleDrawer}>
-                  <List style={{ width: 250, color: "#FFFF" }}>
-                    <ListItem button onClick={this.handleClose}>
-                      Profile
-                    </ListItem>
-                    <ListItem button onClick={this.handleClose}>
-                      Drafting
-                    </ListItem>
-                    <ListItem button onClick={this.handleClose}>
-                      Logout
-                    </ListItem>
-                  </List>
-                </Drawer>
-              </div>
-              <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
-                GM
-              </Typography>
-              <Button color="inherit">Login</Button>
-            </Toolbar>
-          </AppBar>
+                  GM
+                </Typography>
+                <Button color="inherit">Login</Button>
+              </Toolbar>
+            </AppBar>
 
-          {!this.state.drafting ? (
-            <div align="center">
-              <Typography variant="h1" style={titleStyle}>
-                Sign-up now to Play!
-              </Typography>
-              <Button color="secondary" variant="contained">
-                Sign up
-              </Button>
-            </div>
-          ) : (
-            <DraftingPage />
-          )}
-        </div>
-      </MuiThemeProvider>
+            {this.state.selectedTab === "Home" && <Home />}
+            {this.state.selectedTab === "Profile" && <Home />}
+            {this.state.selectedTab === "Drafting" && <DraftingPage />}
+          </div>
+        </MuiThemeProvider>
+      </Provider>
     );
   }
 }
