@@ -1,162 +1,162 @@
 export const players = [
   {
-    name: "Lebrom James",
-    img: "../img/LebronJames.png"
+    name: "Lebron James",
+    img: require("../img/LebronJames.png")
   },
   {
     name: "Stephen Curry",
-    img: "../img/StephenCurry.png"
+    img: require("../img/StephenCurry.png")
   },
   {
     name: "Jimmy Butler",
-    img: "../img/JimmyButler.png"
+    img: require("../img/JimmyButler.png")
   },
   {
     name: "Kemba Walker",
-    img: "../img/KembaWalker.png"
+    img: require("../img/KembaWalker.png")
   },
   {
     name: "Luka Doncic",
-    img: "../img/LukaDoncic.png"
+    img: require("../img/LukaDoncic.png")
   },
   {
     name: "Lou Williams",
-    img: "../img/LouWilliams.png"
+    img: require("../img/LouWilliams.png")
   },
   {
     name: "James Harden",
-    img: "../img/JamesHarden.png"
+    img: require("../img/JamesHarden.png")
   },
   {
     name: "Kyrie Irving",
-    img: "../img/KyrieIrving.png"
+    img: require("../img/KyrieIrving.png")
   },
   {
     name: "Bradley beal",
-    img: "../img/BradleyBeal.png"
+    img: require("../img/BradleyBeal.png")
   },
   {
     name: "Aaron Gordon",
-    img: "../img/AaronGordon.png"
+    img: require("../img/AaronGordon.png")
   },
   {
     name: "Andre Iguodala",
-    img: "../img/AndreIguodala.png"
+    img: require("../img/AndreIguodala.png")
   },
   {
     name: "Andrew Bogut",
-    img: "../img/AndrewBogut.png"
+    img: require("../img/AndrewBogut.png")
   },
   {
     name: "Anthony Davis",
-    img: "../img/AnthonyDavis.png"
+    img: require("../img/AnthonyDavis.png")
   },
   {
     name: "Bismack Biyombo",
-    img: "../img/BismackBiyombo.png"
+    img: require("../img/BismackBiyombo.png")
   },
   {
     name: "Blake Griffin",
-    img: "../img/BlakeGriffin.png"
+    img: require("../img/BlakeGriffin.png")
   },
   {
     name: "Brandon Ingram",
-    img: "../img/BrandonIngram.png"
+    img: require("../img/BrandonIngram.png")
   },
   {
     name: "Channing Frye",
-    img: "../img/ChanningFrye.png"
+    img: require("../img/ChanningFrye.png")
   },
   {
     name: "Clint Capela",
-    img: "../img/ClintCapela.png"
+    img: require("../img/ClintCapela.png")
   },
   {
     name: "Danny Green",
-    img: "../img/DannyGreen.png"
+    img: require("../img/DannyGreen.png")
   },
   {
     name: "Demarcus Cousins",
-    img: "../img/DemarcusCousins.png"
+    img: require("../img/DemarcusCousins.png")
   },
   {
     name: "Devin Booker",
-    img: "../img/DevinBooker.png"
+    img: require("../img/DevinBooker.png")
   },
   {
     name: "Dwight Howard",
-    img: "../img/DwightHoward.png"
+    img: require("../img/DwightHoward.png")
   },
   {
     name: "Gordon Hayward",
-    img: "../img/GordonHayward.png"
+    img: require("../img/GordonHayward.png")
   },
   {
     name: "Ian Clark",
-    img: "../img/IanClark.png"
+    img: require("../img/IanClark.png")
   },
   {
     name: "Jamal Crawford",
-    img: "../img/JamalCrawford.png"
+    img: require("../img/JamalCrawford.png")
   },
   {
     name: "Jaylen Brown",
-    img: "../img/JaylenBrown.png"
+    img: require("../img/JaylenBrown.png")
   },
   {
     name: "Joel Embiid",
-    img: "../img/JoelEmbiid.png"
+    img: require("../img/JoelEmbiid.png")
   },
   {
     name: "JordanClarkson",
-    img: "../img/JordanClarkson.png"
+    img: require("../img/JordanClarkson.png")
   },
   {
     name: "Marc Gasol",
-    img: "../img/MarcGasol.png"
+    img: require("../img/MarcGasol.png")
   },
   {
     name: "Marco Belinelli",
-    img: "../img/MarcoBelinelli.png"
+    img: require("../img/MarcoBelinelli.png")
   },
   {
     name: "Markelle Fultz",
-    img: "../img/MarkelleFultz.png"
+    img: require("../img/MarkelleFultz.png")
   },
   {
     name: "Mike Conley",
-    img: "../img/MikeConley.png"
+    img: require("../img/MikeConley.png")
   },
   {
     name: "Nikola Jokic",
-    img: "../img/NikolaJokic.png"
+    img: require("../img/NikolaJokic.png")
   },
   {
     name: "Pau Gasol",
-    img: "../img/PauGasol.png"
+    img: require("../img/PauGasol.png")
   },
   {
     name: "Paul George",
-    img: "../img/PaulGeorge.png"
+    img: require("../img/PaulGeorge.png")
   },
   {
     name: "Rudy Gobert",
-    img: "../img/RudyGobert.png"
+    img: require("../img/RudyGobert.png")
   },
   {
     name: "Seth Curry",
-    img: "../img/SethCurry.png"
+    img: require("../img/SethCurry.png")
   },
   {
     name: "Tyson Chandler",
-    img: "../img/TysonChandler.png"
+    img: require("../img/TysonChandler.png")
   },
   {
     name: "Vince Carter",
-    img: "../img/VinceCarter.png"
+    img: require("../img/VinceCarter.png")
   },
   {
     name: "Kyle Korver",
-    img: "../img/KyleKorver.png"
+    img: require("../img/KyleKorver.png")
   }
 ];

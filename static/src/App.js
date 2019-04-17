@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import gmApp from "./reducers";
 
 import "./App.css";
-import "./DraftingPage";
+import Home from "./Home";
 import DraftingPage from "./DraftingPage";
 
 import AppBar from "@material-ui/core/AppBar";
@@ -10,23 +13,22 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Drawer from "@material-ui/core/Drawer";
 
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 // import { players } from "./constants/players";
 import PlayerInfoPage from "./playerInfoPage";
 
+const store = createStore(gmApp);
+
 const rootStyle = {
   flexGrow: 1,
   backgroundColor: "#282c34",
   backgroundRepeat: "repeat",
-  paddingBottom: 100
-};
-
-const titleStyle = {
-  paddingTop: 100,
   paddingBottom: 100
 };
 
@@ -38,30 +40,19 @@ const theme = createMuiTheme({
 
 class App extends Component {
   state = {
-    anchorEl: null,
-    drafting: false,
-    profiling: true,
+    anchorEl: false,
+    selectedTab: "Home"
   };
 
   handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
+    this.setState({ anchorEl: true });
   };
 
-  handleDrafting = event => {
+  handleClose = event => {
     console.log(event.nativeEvent.target.outerText);
     this.setState({
-      anchorEl: null,
-      drafting: true,
-      profiling: false,
-    });
-  };
-
-  handleProfile = event => {
-    console.log(event.nativeEvent.target.outerText);
-    this.setState({
-      anchorEl: null,
-      drafting: false,
-      profiling: true
+      anchorEl: false,
+      selectedTab: event.nativeEvent.target.outerText
     });
   };
 
@@ -69,54 +60,53 @@ class App extends Component {
     const { anchorEl } = this.state;
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <div style={rootStyle}>
-          <AppBar position="static">
-            <Toolbar>
-              <div>
-                <IconButton
+      <Provider store={store}>
+        <MuiThemeProvider theme={theme}>
+          <div style={rootStyle}>
+            <AppBar position="static">
+              <Toolbar>
+                <div>
+                  <IconButton
+                    color="inherit"
+                    aria-label="Menu"
+                    onClick={this.handleClick}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                  <Drawer
+                    open={this.state.anchorEl}
+                    onClose={this.toggleDrawer}
+                  >
+                    <List style={{ width: 250, color: "#FFFF" }}>
+                      <ListItem button onClick={this.handleClose}>
+                        Profile
+                      </ListItem>
+                      <ListItem button onClick={this.handleClose}>
+                        Drafting
+                      </ListItem>
+                      <ListItem button onClick={this.handleClose}>
+                        Logout
+                      </ListItem>
+                    </List>
+                  </Drawer>
+                </div>
+                <Typography
+                  variant="h6"
                   color="inherit"
-                  aria-label="Menu"
-                  onClick={this.handleClick}
+                  style={{ flexGrow: 1 }}
                 >
-                  <MenuIcon />
-                </IconButton>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  onClose={this.handleDrafting}
-                >
-                  <MenuItem onClick={this.handleProfile}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleDrafting}>Drafting</MenuItem>
-                  <MenuItem onClick={this.handleDrafting}>Logout</MenuItem>
-                </Menu>
-              </div>
-              <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
-                GM
-              </Typography>
-              <Button color="inherit">Login</Button>
-            </Toolbar>
-          </AppBar>
+                  GM
+                </Typography>
+                <Button color="inherit">Login</Button>
+              </Toolbar>
+            </AppBar>
 
-          {!this.state.drafting ? 
-            !this.state.profiling ? (
-            <div align="center">
-              <Typography variant="h1" style={titleStyle}>
-                Sign-up now to Play!
-              </Typography>
-              <Button color="secondary" variant="contained">
-                Sign up
-              </Button>
-            </div>
-          ) : <PlayerInfoPage /> : (
-              <DraftingPage
-                user={["Faith Chau", "/FaithChau.jpeg"]}
-                winRate="30%"
-              />
-          )}
-        </div>
-      </MuiThemeProvider>
+            {this.state.selectedTab === "Home" && <Home />}
+            {this.state.selectedTab === "Profile" && <Home />}
+            {this.state.selectedTab === "Drafting" && <DraftingPage />}
+          </div>
+        </MuiThemeProvider>
+      </Provider>
     );
   }
 }
