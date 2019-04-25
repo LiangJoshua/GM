@@ -7,8 +7,8 @@ from pandas.plotting import scatter_matrix
 from pandas import set_option
 from pandas import read_csv
 
-champsFile = 'champs.csv'
-runnersFile = 'runners.csv'
+champsFile = 'data/champs.csv'
+runnersFile = 'data/runners.csv'
 
 data1 = pd.read_csv(champsFile)
 data2 = pd.read_csv(runnersFile)
