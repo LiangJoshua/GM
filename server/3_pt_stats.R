@@ -1,7 +1,7 @@
 #Analysis on 3 points in NBA Finals
 setwd('~/desktop/github/gm/server')
 suppressMessages(library(tidyverse))
-averages <- read.csv(file = 'champs_and_runner_ups_series_averages.csv')
+averages <- read.csv(file = 'data/champs_and_runner_ups_series_averages.csv')
 eight_to_eightytwo  <- ggplot(data = filter(averages,Year < 1983),aes(x = Year, y = TP,fill = Status)) + 
   geom_bar(stat = 'identity',position = 'dodge') +
   scale_x_continuous(breaks=seq(1980, 1984, 1)) +
@@ -68,7 +68,7 @@ perc_attempts_threes <- ggplot(data = percentage_of_attempts_threes, aes(x = Yea
 suppressMessages(require(gridExtra))
 grid.arrange(points,tp,ppts_threes,tpp,tpa,perc_attempts_threes,ncol=3)
 
-by_decade <- read.csv(file = 'stats_by_decade.csv')
+by_decade <- read.csv(file = 'data/stats_by_decade.csv')
 scoring_by_decade <- ggplot(data = by_decade,aes(x = Years, y = Average_PTS,fill = Status)) + 
   geom_bar(stat = 'identity',position = 'dodge') +
   ggtitle('Average Points Scored') + 
