@@ -16,12 +16,34 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 
+import Dialog from "@material-ui/core/Dialog";
+import Slide from "@material-ui/core/Slide";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+
 import "./App.css";
 import { players } from "./constants/players.js";
+import PlayerInfoPage from "./playerInfoPage.js";
 
 class DraftingPage extends Component {
   state = {
-    draftedPlayers: []
+    draftedPlayers: [],
+    showLearnMore: false,
+    showPlayer: null,
+    showPlayerInfo: null
+  };
+
+  handleDialogOpen = event => {
+    console.log(event);
+    this.setState({
+      showLearnMore: true,
+      showPlayer: event.name,
+      showPlayerInfo: event.info
+    });
+  };
+
+  handleDialogClose = () => {
+    this.setState({ showLearnMore: false });
   };
 
   render() {
@@ -39,10 +61,12 @@ class DraftingPage extends Component {
               <div>
                 {players.map(p => {
                   return !this.state.draftedPlayers.includes(p.name) ? (
-                    <ExpansionPanel>
-                      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <Avatar src={p.img} />
-
+                    <ExpansionPanel id={p.name}>
+                      <ExpansionPanelSummary
+                        id={p.name}
+                        expandIcon={<ExpandMoreIcon />}
+                      >
+                        <Avatar src={p.info.img} />
                         <Typography>{p.name} </Typography>
                       </ExpansionPanelSummary>
                       <ExpansionPanelDetails>
@@ -54,7 +78,34 @@ class DraftingPage extends Component {
                       </ExpansionPanelDetails>
                       <Divider />
                       <ExpansionPanelActions>
-                        <Button size="small">Learn More</Button>
+                        <Button
+                          size="small"
+                          onClick={() => {
+                            this.handleDialogOpen({
+                              name: p.name,
+                              info: p.info
+                            });
+                          }}
+                        >
+                          Learn More
+                        </Button>
+                        <Dialog
+                          fullScreen
+                          open={this.state.showLearnMore}
+                          onClose={this.handleDialogClose}
+                        >
+                          <IconButton
+                            color="inherit"
+                            onClick={this.handleDialogClose}
+                            aria-label="Close"
+                          >
+                            <CloseIcon />
+                          </IconButton>
+                          <PlayerInfoPage
+                            name={this.state.showPlayer}
+                            info={this.state.showPlayerInfo}
+                          />
+                        </Dialog>
                         <Button
                           size="small"
                           color="primary"
@@ -91,10 +142,13 @@ class DraftingPage extends Component {
                 return (
                   <Card style={{ marginTop: 10 }}>
                     <div
-                      style={{ textAlign: "center", display: "inline-block" }}
+                      style={{
+                        textAlign: "center",
+                        display: "inline-block"
+                      }}
                     >
                       <Avatar
-                        src={playerInfo.img}
+                        src={playerInfo.info.img}
                         style={{
                           width: 60,
                           height: 60
@@ -107,7 +161,10 @@ class DraftingPage extends Component {
                       </Typography>
                     </CardContent>
                     <CardActions
-                      style={{ textAlign: "center", display: "inline-block" }}
+                      style={{
+                        textAlign: "center",
+                        display: "inline-block"
+                      }}
                     >
                       <Button
                         size="small"

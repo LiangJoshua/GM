@@ -1,11 +1,51 @@
 export const players = [
   {
     name: "Lebron James",
-    img: require("../img/LebronJames.png")
+    info: {
+      img: require("../img/LebronJames.png"),
+      basicInfo: {
+        Position: "S.F.",
+        Age: 34,
+        Team: "LAL"
+      },
+
+      gameStats: {
+        G: 39,
+        GS: 39,
+        MPG: 34.9
+      },
+
+      stats: {
+        FG: 9.8,
+        FGA: 19.2,
+        "FG%": 0.513,
+        "3P": 2.1,
+        "3PA": 5.8,
+        "3P%": 0.355,
+        "2P": 7.7,
+        "2PA": 13.3,
+        "2P%": 0.582,
+        "eFG%": 0.567,
+        FT: 5.1,
+        FTA: 7.4,
+        "FT%": 0.679,
+        ORB: 0.9,
+        DRB: 7.7,
+        TRB: 8.6,
+        AST: 7.6,
+        STL: 1.3,
+        BLK: 0.6,
+        TOV: 3.5,
+        PF: 1.7,
+        "PS/G": 26.8
+      }
+    }
   },
   {
     name: "Stephen Curry",
-    img: require("../img/StephenCurry.png")
+    info: {
+      img: require("../img/StephenCurry.png")
+    }
   },
   {
     name: "Jimmy Butler",
