@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import DraftingPage from "./DraftingPage";
+// import DraftingPage from "./DraftingPage";
 // import axios from "axios";
 import * as serviceWorker from "./serviceWorker";
 

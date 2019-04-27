@@ -21,7 +21,7 @@ import Drawer from "@material-ui/core/Drawer";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 // import { players } from "./constants/players";
-import PlayerInfoPage from "./playerInfoPage";
+// import PlayerInfoPage from "./playerInfoPage";
 
 const store = createStore(gmApp);
 
@@ -57,7 +57,7 @@ class App extends Component {
   };
 
   render() {
-    const { anchorEl } = this.state;
+    // const { anchorEl } = this.state;
 
     return (
       <Provider store={store}>

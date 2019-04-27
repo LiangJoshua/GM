@@ -70,11 +70,14 @@ class DraftingPage extends Component {
                         <Typography>{p.name} </Typography>
                       </ExpansionPanelSummary>
                       <ExpansionPanelDetails>
+                        <div>
                         <Typography>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Suspendisse malesuada lacus ex, sit amet blandit
-                          leo lobortis eget.
+                          FG%: {(p.info.stats["FG%"] * 100).toFixed(2)}%
                         </Typography>
+                        <Typography>
+                          3P%: {(p.info.stats["3P%"] * 100).toFixed(2)}%
+                        </Typography>
+                        </div>
                       </ExpansionPanelDetails>
                       <Divider />
                       <ExpansionPanelActions>
