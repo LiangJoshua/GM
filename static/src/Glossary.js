@@ -15,6 +15,9 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+
 import gloss from "./constants/terms.js";
 
 class Glossary extends Component {
@@ -25,8 +28,7 @@ class Glossary extends Component {
   }
 
   state = {
-    open: false,
-    goBack: false
+    open: false
   };
 
   handleOpen() {
@@ -57,11 +59,17 @@ class Glossary extends Component {
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
-          // justify="center"
           open={this.state.open}
           onClose={this.handleClose}
         >
           <div>
+            <IconButton
+              color="default"
+              onClick={this.handleClose}
+              aria-label="Close"
+            >
+              <CloseIcon />
+            </IconButton>
             <Table>
               <TableHead>
                 <TableRow>

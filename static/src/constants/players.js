@@ -48,13 +48,13 @@ export const players = [
       basicInfo: {
         Position: "PG",
         Age: 30,
-        Team: "GSW",
+        Team: "GSW"
       },
 
       gameStats: {
         G: 45,
         GS: 45,
-        MPG: 34.3,
+        MPG: 34.3
       },
 
       stats: {
@@ -90,13 +90,13 @@ export const players = [
       basicInfo: {
         Position: "SF",
         Age: 29,
-        Team: "PHI",
+        Team: "PHI"
       },
 
       gameStats: {
         G: 45,
         GS: 45,
-        MPG: 33.4,
+        MPG: 33.4
       },
 
       stats: {
@@ -132,13 +132,13 @@ export const players = [
       basicInfo: {
         Position: "PG",
         Age: 28,
-        Team: "CHA",
+        Team: "CHA"
       },
 
       gameStats: {
         G: 56,
         GS: 56,
-        MPG: 34.5,
+        MPG: 34.5
       },
 
       stats: {
@@ -174,13 +174,13 @@ export const players = [
       basicInfo: {
         Position: "SG",
         Age: 19,
-        Team: "DAL",
+        Team: "DAL"
       },
 
       gameStats: {
         G: 54,
         GS: 54,
-        MPG: 32.2,
+        MPG: 32.2
       },
 
       stats: {
@@ -216,13 +216,13 @@ export const players = [
       basicInfo: {
         Position: "SG",
         Age: 32,
-        Team: "LAC",
+        Team: "LAC"
       },
 
       gameStats: {
         G: 52,
         GS: 0,
-        MPG: 26.2,
+        MPG: 26.2
       },
 
       stats: {
@@ -258,13 +258,13 @@ export const players = [
       basicInfo: {
         Position: "SG",
         Age: 29,
-        Team: "HOU",
+        Team: "HOU"
       },
 
       gameStats: {
         G: 53,
         GS: 53,
-        MPG: 37.4,
+        MPG: 37.4
       },
 
       stats: {
@@ -300,13 +300,13 @@ export const players = [
       basicInfo: {
         Position: "PG",
         Age: 26,
-        Team: "BOS",
+        Team: "BOS"
       },
 
       gameStats: {
         G: 47,
         GS: 47,
-        MPG: 32.5,
+        MPG: 32.5
       },
 
       stats: {
@@ -342,13 +342,13 @@ export const players = [
       basicInfo: {
         Position: "SG",
         Age: 25,
-        Team: "WAS",
+        Team: "WAS"
       },
 
       gameStats: {
         G: 57,
         GS: 57,
-        MPG: 37.1,
+        MPG: 37.1
       },
 
       stats: {
@@ -384,13 +384,13 @@ export const players = [
       basicInfo: {
         Position: "PF",
         Age: 23,
-        Team: "ORL",
+        Team: "ORL"
       },
 
       gameStats: {
         G: 54,
         GS: 54,
-        MPG: 33.5,
+        MPG: 33.5
       },
 
       stats: {
@@ -426,7 +426,7 @@ export const players = [
       basicInfo: {
         Position: "SF",
         Age: 35,
-        Team: "GSW",
+        Team: "GSW"
       },
 
       gameStats: {
@@ -468,13 +468,13 @@ export const players = [
       basicInfo: {
         Position: "C",
         Age: 34,
-        Team: "GSW",
+        Team: "GSW"
       },
 
       gameStats: {
         G: 11,
         GS: 5,
-        MPG: 12.2,
+        MPG: 12.2
       },
 
       stats: {
@@ -510,13 +510,13 @@ export const players = [
       basicInfo: {
         Position: "C",
         Age: 25,
-        Team: "NOP",
+        Team: "NOP"
       },
 
       gameStats: {
         G: 44,
         GS: 44,
-        MPG: 36.4,
+        MPG: 36.4
       },
 
       stats: {
@@ -552,13 +552,13 @@ export const players = [
       basicInfo: {
         Position: "C",
         Age: 26,
-        Team: "CHA",
+        Team: "CHA"
       },
 
       gameStats: {
         G: 31,
         GS: 17,
-        MPG: 15.2,
+        MPG: 15.2
       },
 
       stats: {
@@ -594,13 +594,13 @@ export const players = [
       basicInfo: {
         Position: "PF",
         Age: 29,
-        Team: "DET",
+        Team: "DET"
       },
 
       gameStats: {
         G: 53,
         GS: 53,
-        MPG: 36.3,
+        MPG: 36.3
       },
 
       stats: {
@@ -636,13 +636,13 @@ export const players = [
       basicInfo: {
         Position: "SF",
         Age: 21,
-        Team: "LAL",
+        Team: "LAL"
       },
 
       gameStats: {
         G: 46,
         GS: 46,
-        MPG: 33.4,
+        MPG: 33.4
       },
 
       stats: {
@@ -678,13 +678,13 @@ export const players = [
       basicInfo: {
         Position: "C",
         Age: 35,
-        Team: "CLE",
+        Team: "CLE"
       },
 
       gameStats: {
         G: 29,
         GS: 5,
-        MPG: 9.5,
+        MPG: 9.5
       },
 
       stats: {
@@ -720,13 +720,13 @@ export const players = [
       basicInfo: {
         Position: "C",
         Age: 24,
-        Team: "HOU",
+        Team: "HOU"
       },
 
       gameStats: {
         G: 42,
         GS: 42,
-        MPG: 34.2,
+        MPG: 34.2
       },
 
       stats: {
@@ -762,13 +762,13 @@ export const players = [
       basicInfo: {
         Position: "SG",
         Age: 31,
-        Team: "TOR",
+        Team: "TOR"
       },
 
       gameStats: {
         G: 56,
         GS: 56,
-        MPG: 28.7,
+        MPG: 28.7
       },
 
       stats: {
@@ -804,13 +804,13 @@ export const players = [
       basicInfo: {
         Position: "C",
         Age: 28,
-        Team: "GSW",
+        Team: "GSW"
       },
 
       gameStats: {
         G: 11,
         GS: 11,
-        MPG: 23.4,
+        MPG: 23.4
       },
 
       stats: {
@@ -846,13 +846,13 @@ export const players = [
       basicInfo: {
         Position: "SG",
         Age: 22,
-        Team: "PHX",
+        Team: "PHX"
       },
 
       gameStats: {
         G: 43,
         GS: 43,
-        MPG: 34.8,
+        MPG: 34.8
       },
 
       stats: {
@@ -888,13 +888,13 @@ export const players = [
       basicInfo: {
         Position: "C",
         Age: 33,
-        Team: "WAS",
+        Team: "WAS"
       },
 
       gameStats: {
         G: 9,
         GS: 9,
-        MPG: 25.6,
+        MPG: 25.6
       },
 
       stats: {
@@ -930,13 +930,13 @@ export const players = [
       basicInfo: {
         Position: "PF",
         Age: 28,
-        Team: "BOS",
+        Team: "BOS"
       },
 
       gameStats: {
         G: 52,
         GS: 16,
-        MPG: 25.9,
+        MPG: 25.9
       },
 
       stats: {
@@ -972,13 +972,13 @@ export const players = [
       basicInfo: {
         Position: "SG",
         Age: 27,
-        Team: "NOP",
+        Team: "NOP"
       },
 
       gameStats: {
         G: 40,
         GS: 0,
-        MPG: 13.3,
+        MPG: 13.3
       },
 
       stats: {
@@ -1014,13 +1014,13 @@ export const players = [
       basicInfo: {
         Position: "SG",
         Age: 38,
-        Team: "PHX",
+        Team: "PHX"
       },
 
       gameStats: {
         G: 48,
         GS: 0,
-        MPG: 17.6,
+        MPG: 17.6
       },
 
       stats: {
@@ -1056,13 +1056,13 @@ export const players = [
       basicInfo: {
         Position: "SG",
         Age: 22,
-        Team: "BOS",
+        Team: "BOS"
       },
 
       gameStats: {
         G: 52,
         GS: 23,
-        MPG: 25.9,
+        MPG: 25.9
       },
 
       stats: {
@@ -1098,13 +1098,13 @@ export const players = [
       basicInfo: {
         Position: "C",
         Age: 24,
-        Team: "PHI",
+        Team: "PHI"
       },
 
       gameStats: {
         G: 53,
         GS: 53,
-        MPG: 33.7,
+        MPG: 33.7
       },
 
       stats: {
@@ -1140,13 +1140,13 @@ export const players = [
       basicInfo: {
         Position: "SG",
         Age: 26,
-        Team: "CLE",
+        Team: "CLE"
       },
 
       gameStats: {
         G: 56,
         GS: 0,
-        MPG: 26.7,
+        MPG: 26.7
       },
 
       stats: {
@@ -1182,13 +1182,13 @@ export const players = [
       basicInfo: {
         Position: "C",
         Age: 34,
-        Team: "TOR",
+        Team: "TOR"
       },
 
       gameStats: {
         G: 55,
         GS: 53,
-        MPG: 33.3,
+        MPG: 33.3
       },
 
       stats: {
@@ -1224,13 +1224,13 @@ export const players = [
       basicInfo: {
         Position: "SG",
         Age: 32,
-        Team: "SAS",
+        Team: "SAS"
       },
 
       gameStats: {
         G: 57,
         GS: 1,
-        MPG: 22.7,
+        MPG: 22.7
       },
 
       stats: {
@@ -1266,13 +1266,13 @@ export const players = [
       basicInfo: {
         Position: "PG",
         Age: 20,
-        Team: "PHI",
+        Team: "PHI"
       },
 
       gameStats: {
         G: 19,
         GS: 15,
-        MPG: 22.5,
+        MPG: 22.5
       },
 
       stats: {
@@ -1308,13 +1308,13 @@ export const players = [
       basicInfo: {
         Position: "PG",
         Age: 31,
-        Team: "MEM",
+        Team: "MEM"
       },
 
       gameStats: {
         G: 55,
         GS: 55,
-        MPG: 33.6,
+        MPG: 33.6
       },
 
       stats: {
@@ -1350,13 +1350,13 @@ export const players = [
       basicInfo: {
         Position: "C",
         Age: 23,
-        Team: "DEN",
+        Team: "DEN"
       },
 
       gameStats: {
         G: 55,
         GS: 55,
-        MPG: 31.5,
+        MPG: 31.5
       },
 
       stats: {
@@ -1392,13 +1392,13 @@ export const players = [
       basicInfo: {
         Position: "C",
         Age: 38,
-        Team: "SAS",
+        Team: "SAS"
       },
 
       gameStats: {
         G: 26,
         GS: 6,
-        MPG: 12.5,
+        MPG: 12.5
       },
 
       stats: {
@@ -1434,13 +1434,13 @@ export const players = [
       basicInfo: {
         Position: "SF",
         Age: 28,
-        Team: "OKC",
+        Team: "OKC"
       },
 
       gameStats: {
         G: 55,
         GS: 55,
-        MPG: 36.2,
+        MPG: 36.2
       },
 
       stats: {
@@ -1476,13 +1476,13 @@ export const players = [
       basicInfo: {
         Position: "C",
         Age: 26,
-        Team: "UTA",
+        Team: "UTA"
       },
 
       gameStats: {
         G: 57,
         GS: 56,
-        MPG: 31.6,
+        MPG: 31.6
       },
 
       stats: {
@@ -1518,13 +1518,13 @@ export const players = [
       basicInfo: {
         Position: "SG",
         Age: 28,
-        Team: "POR",
+        Team: "POR"
       },
 
       gameStats: {
         G: 50,
         GS: 2,
-        MPG: 17.2,
+        MPG: 17.2
       },
 
       stats: {
@@ -1560,13 +1560,13 @@ export const players = [
       basicInfo: {
         Position: "C",
         Age: 36,
-        Team: "LAL",
+        Team: "LAL"
       },
 
       gameStats: {
         G: 48,
         GS: 6,
-        MPG: 16.9,
+        MPG: 16.9
       },
 
       stats: {
@@ -1602,13 +1602,13 @@ export const players = [
       basicInfo: {
         Position: "SF",
         Age: 42,
-        Team: "ATL",
+        Team: "ATL"
       },
 
       gameStats: {
         G: 52,
         GS: 8,
-        MPG: 15.9,
+        MPG: 15.9
       },
 
       stats: {
@@ -1644,13 +1644,13 @@ export const players = [
       basicInfo: {
         Position: "SG",
         Age: 37,
-        Team: "UTA",
+        Team: "UTA"
       },
 
       gameStats: {
         G: 51,
         GS: 0,
-        MPG: 18.7,
+        MPG: 18.7
       },
 
       stats: {

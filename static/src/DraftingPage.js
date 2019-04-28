@@ -25,6 +25,10 @@ import "./App.css";
 import { players } from "./constants/players.js";
 import PlayerInfoPage from "./playerInfoPage.js";
 
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
+
 class DraftingPage extends Component {
   state = {
     draftedPlayers: [],
@@ -61,22 +65,19 @@ class DraftingPage extends Component {
               <div>
                 {players.map(p => {
                   return !this.state.draftedPlayers.includes(p.name) ? (
-                    <ExpansionPanel id={p.name}>
-                      <ExpansionPanelSummary
-                        id={p.name}
-                        expandIcon={<ExpandMoreIcon />}
-                      >
+                    <ExpansionPanel key={p.name}>
+                      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                         <Avatar src={p.info.img} />
                         <Typography>{p.name} </Typography>
                       </ExpansionPanelSummary>
                       <ExpansionPanelDetails>
                         <div>
-                        <Typography>
-                          FG%: {(p.info.stats["FG%"] * 100).toFixed(2)}%
-                        </Typography>
-                        <Typography>
-                          3P%: {(p.info.stats["3P%"] * 100).toFixed(2)}%
-                        </Typography>
+                          <Typography>
+                            FG%: {(p.info.stats["FG%"] * 100).toFixed(2)}%
+                          </Typography>
+                          <Typography>
+                            3P%: {(p.info.stats["3P%"] * 100).toFixed(2)}%
+                          </Typography>
                         </div>
                       </ExpansionPanelDetails>
                       <Divider />
@@ -92,23 +93,7 @@ class DraftingPage extends Component {
                         >
                           Learn More
                         </Button>
-                        <Dialog
-                          fullScreen
-                          open={this.state.showLearnMore}
-                          onClose={this.handleDialogClose}
-                        >
-                          <IconButton
-                            color="inherit"
-                            onClick={this.handleDialogClose}
-                            aria-label="Close"
-                          >
-                            <CloseIcon />
-                          </IconButton>
-                          <PlayerInfoPage
-                            name={this.state.showPlayer}
-                            info={this.state.showPlayerInfo}
-                          />
-                        </Dialog>
+
                         <Button
                           size="small"
                           color="primary"
@@ -131,6 +116,25 @@ class DraftingPage extends Component {
             </div>
           </Grid>
         </div>
+
+        <Dialog
+          fullScreen
+          open={this.state.showLearnMore}
+          onClose={this.handleDialogClose}
+          TransitionComponent={Transition}
+        >
+          <IconButton
+            color="default"
+            onClick={this.handleDialogClose}
+            aria-label="Close"
+          >
+            <CloseIcon />
+          </IconButton>
+          <PlayerInfoPage
+            name={this.state.showPlayer}
+            info={this.state.showPlayerInfo}
+          />
+        </Dialog>
 
         <div>
           <Grid container direction="column" justify="space-evenly">
@@ -189,6 +193,8 @@ class DraftingPage extends Component {
               })}
             </div>
           </Grid>
+          debugger;
+          {this.state.draftedPlayers.size === 1 && <Button>hi</Button>}
         </div>
       </Grid>
     );

@@ -58,7 +58,7 @@ function PlayerInfoPage(props) {
   let halfLength = statKeys.length / 2;
   for (let i = 0; i < halfLength; i++) {
     statistics1.push(
-      <ListItem>
+      <ListItem key={i}>
         <ListItemAvatar>
           <Avatar style={styles.wordAvatar}>{statKeys[i]}</Avatar>
         </ListItemAvatar>
@@ -68,7 +68,7 @@ function PlayerInfoPage(props) {
       </ListItem>
     );
     statistics2.push(
-      <ListItem>
+      <ListItem key={i + halfLength}>
         <ListItemAvatar>
           <Avatar style={styles.wordAvatar}>{statKeys[i + halfLength]}</Avatar>
         </ListItemAvatar>
@@ -85,13 +85,7 @@ function PlayerInfoPage(props) {
       <Typography variant="h1" style={styles.title}>
         {props.name}
       </Typography>
-      <Grid
-        container
-        direction="column"
-        justify="center"
-        spacing={4}
-        alignItems="center"
-      >
+      <Grid container direction="column" justify="center" alignItems="center">
         <Typography variant="h3" style={styles.title}>
           Basic Info
         </Typography>
