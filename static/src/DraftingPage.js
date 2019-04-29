@@ -17,6 +17,10 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 
 import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 import Slide from "@material-ui/core/Slide";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -34,7 +38,8 @@ class DraftingPage extends Component {
     draftedPlayers: [],
     showLearnMore: false,
     showPlayer: null,
-    showPlayerInfo: null
+    showPlayerInfo: null,
+    submission: false
   };
 
   handleDialogOpen = event => {
@@ -48,6 +53,10 @@ class DraftingPage extends Component {
 
   handleDialogClose = () => {
     this.setState({ showLearnMore: false });
+  };
+
+  handleSubmissionClose = () => {
+    this.setState({ submission: false });
   };
 
   render() {
@@ -102,7 +111,11 @@ class DraftingPage extends Component {
                             this.setState({
                               draftedPlayers: this.state.draftedPlayers.concat(
                                 p.name
-                              )
+                              ),
+                              submission:
+                                this.state.draftedPlayers.length + 1 === 6
+                                  ? true
+                                  : false
                             });
                           }}
                         >
@@ -139,7 +152,9 @@ class DraftingPage extends Component {
         <div>
           <Grid container direction="column" justify="space-evenly">
             <div style={{ textAlign: "center" }}>
-              <h1 style={{ color: "#FFF" }}>Your Players</h1>
+              <h1 style={{ color: "#FFF" }}>
+                Your Players ({this.state.draftedPlayers.length}/6)
+              </h1>
 
               {this.state.draftedPlayers.map(drafted => {
                 const playerInfo = players.find(
@@ -193,8 +208,35 @@ class DraftingPage extends Component {
               })}
             </div>
           </Grid>
-          debugger;
-          {this.state.draftedPlayers.size === 1 && <Button>hi</Button>}
+
+          <Dialog
+            open={this.state.submission}
+            onClose={this.handleSubmissionClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Are you ready to submit?"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                You have drafted 6 players. Click 'Submit' to view your winning
+                probability.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleSubmissionClose} color="primary">
+                Not Ready
+              </Button>
+              <Button
+                onClick={this.handleSubmissionClose}
+                color="primary"
+                autoFocus
+              >
+                Submit
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
       </Grid>
     );
