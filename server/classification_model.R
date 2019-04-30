@@ -3,8 +3,8 @@ library(tidyverse)
 library(caret)
 
 
-champs <- read_csv(file = "data/champs_2010.csv")
-runners <- read_csv(file = "data/runners_2010.csv")
+champs <- read_csv(file = "data/champs_2000.csv")
+runners <- read_csv(file = "data/runners_2000.csv")
 
 # colnames(champs)
 champs %>% 
@@ -109,7 +109,7 @@ kable(summary(PTS_HomeVsAway_test)[[1]])
 #and work backwards from there to minimize AIC.
 WL <- glm(data = fullPostSeasons_train, 
           formula = Win ~ Home + PTS + FGP + TPP + 
-            FTP + TRB + STL + BLK + TOV + PF, 
+            FTP + TRB + STL + BLK + TOV + PF + AST, 
           family = "binomial")
 
 # Use backwards step-wise regression to build highly predictive model without overfitting
