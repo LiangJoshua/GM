@@ -5,7 +5,8 @@ library(caret)
 
 champs <- read_csv(file = "data/champs_2000.csv")
 runners <- read_csv(file = "data/runners_2000.csv")
-
+test <- read_csv(file = "data/test.csv")
+test1 <- read_csv(file="data/champs_copy.csv")
 # colnames(champs)
 champs %>% 
   select(Team) %>%
@@ -25,10 +26,24 @@ runners <- runners %>%
   mutate(Home = as.factor(Home)) %>%
   rename(X = Y)
 
+test %>%
+  select(Team) %>%
+  distinct()
+
+test <- test %>%
+  mutate(Win = as.factor(Win)) %>%
+  mutate(Home = as.factor(Home)) %>%
+  mutate(X = as.numeric(X))
+
+test1 <- test1 %<%
+  mutate(Win = as.factor(Win)) %>%
+  mutate(Home = as.factor(Home)) %>%
+  mutate(X = as.numeric(X))
 #Combine champs and runners with a row bind, then split 75-25 
 #into a training and test set respectively using an anti-join
 fullPostSeasons <- bind_rows(champs,runners) %>%
   mutate(id = 1:(nrow(champs)*2))
+
 
 fullPostSeasons_train <- sample_frac(fullPostSeasons,0.75)
 fullPostSeasons_test <- anti_join(fullPostSeasons,fullPostSeasons_train,by = 'id')
@@ -108,7 +123,7 @@ kable(summary(PTS_HomeVsAway_test)[[1]])
 #Fist start with a full model that has all potentially meaningful variables, 
 #and work backwards from there to minimize AIC.
 WL <- glm(data = fullPostSeasons_train, 
-          formula = Win ~ Home + PTS + FGP + TPP + 
+          formula = Win ~ PTS + FGP + TPP + 
             FTP + TRB + STL + BLK + TOV + PF + AST, 
           family = "binomial")
 
@@ -124,10 +139,10 @@ summary(backWL)
 #Now, lets make predictions from the test data set using the model built from the training data, 
 #then calculate predictive performance using the confusionMatrix() function from the caret 
 #package.
-preds <- predict(backWL, fullPostSeasons_test, type = "response") %>%
+preds <- predict(backWL, test, type = "response") %>%
   round()
 
-preds_table <- table(preds, fullPostSeasons_test$Win)
+preds_table <- table(preds, test$Win)
 confusionMatrix(preds_table)
 
 
