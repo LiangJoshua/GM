@@ -5,6 +5,8 @@
 # Running on http://localhost:5000/
 # To quit: Press CTRL+C to quit
 
+import math
+
 from flask import Flask, jsonify
 from flask_pymongo import PyMongo
 from flask_cors import CORS
@@ -89,8 +91,8 @@ def calculate_averages(listOfPlayers):
         averages["TOV"] = averages["TOV"] + p_stats["TOV"]
         averages["AST"] = averages["AST"] + p_stats["AST"]
 
-    averages["FGP"] = averages["FGP"] /5
-    averages["TPP"] = averages["TPP"]/5
+    averages["FGP"] = averages["FGP"] /12
+    averages["TPP"] = averages["TPP"]/12
 
 
     print (averages)
@@ -100,6 +102,8 @@ def calculate_averages(listOfPlayers):
 def winning_probability(listOfPlayers):
     averages = calculate_averages(listOfPlayers)
 
+
+    INTERCEPT = -29.91258
     FGP = 39.26539
     TPP = 8.21720
     TRB = 0.32225
@@ -107,11 +111,12 @@ def winning_probability(listOfPlayers):
     TOV = -0.22237
     AST = -0.14096
 
-    winning_prob = FGP*averages["FGP"] + TPP*averages["TPP"] + TRB*averages["TRB"] + STL*averages["STL"]+TOV*averages["TOV"]+AST*averages["AST"]
+    linear_predictor = INTERCEPT+ FGP*averages["FGP"] + TPP*averages["TPP"] + TRB*averages["TRB"] + STL*averages["STL"]+TOV*averages["TOV"]+AST*averages["AST"]
 
+    winning_prob =(math.exp(linear_predictor))/(1+(math.exp(linear_predictor)))
     print(winning_prob)
 
-    return winning_prob
+    return winning_prob*100
 
 if __name__ == "__main__":
     app.run()
