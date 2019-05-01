@@ -6,6 +6,7 @@ import gmApp from "./reducers";
 import "./App.css";
 import Home from "./Home";
 import DraftingPage from "./DraftingPage";
+import Profile from "./Profile";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -41,7 +42,8 @@ class App extends Component {
   state = {
     anchorEl: false,
     selectedTab: "Home",
-    loggedIn: false
+    loggedIn: false,
+    user: null
   };
 
   handleClick = event => {
@@ -58,9 +60,13 @@ class App extends Component {
 
   render() {
     const responseGoogle = response => {
-      console.log(response);
+      console.log(response.profileObj);
 
-      this.setState({ loggedIn: true });
+      this.setState({
+        loggedIn: true,
+        user: response.profileObj,
+        selectedTab: "Profile"
+      });
     };
 
     return (
@@ -105,7 +111,11 @@ class App extends Component {
                   <GoogleLogout
                     buttonText="Logout"
                     onLogoutSuccess={response => {
-                      this.setState({ loggedIn: false });
+                      this.setState({
+                        loggedIn: false,
+                        user: null,
+                        selectedTab: "Home"
+                      });
                     }}
                   />
                 ) : (
@@ -120,7 +130,9 @@ class App extends Component {
             </AppBar>
 
             {this.state.selectedTab === "Home" && <Home />}
-            {this.state.selectedTab === "Profile" && <Home />}
+            {this.state.selectedTab === "Profile" && (
+              <Profile user={this.state.user} />
+            )}
             {this.state.selectedTab === "Drafting" && <DraftingPage />}
           </div>
         </MuiThemeProvider>
