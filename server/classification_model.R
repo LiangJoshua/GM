@@ -114,7 +114,7 @@ ggplot(data = fullPostSeasons,
 
 #Does home court advantage really lead to more points scored?
 PTS_HomeVsAway_test <- aov(data = fullPostSeasons, formula = PTS ~ Home)
-kable(summary(PTS_HomeVsAway_test)[[1]])
+summary(PTS_HomeVsAway_test)[[1]]
 
 #The ANOVA test indicates that there is a significant difference in points 
 #scored per game for when playing at home vs. playing away.
@@ -123,8 +123,8 @@ kable(summary(PTS_HomeVsAway_test)[[1]])
 #Fist start with a full model that has all potentially meaningful variables, 
 #and work backwards from there to minimize AIC.
 WL <- glm(data = fullPostSeasons, 
-          formula = Win ~ Home + FGP + TPP +
-            FTP + TRB + STL + BLK + TOV + PF + AST, 
+          formula = Win ~ FGP + TPP + 
+            TRB + STL + TOV + AST, 
           family = "binomial")
 
 # Use backwards step-wise regression to build highly predictive model without overfitting
@@ -145,6 +145,7 @@ preds <- predict(backWL, test, type = "response") %>%
 preds_table <- table(preds, test$Win)
 confusionMatrix(preds_table)
 
+plot(WL)
 #Logistic Regression Done... Similar to Binomial Regression
 
 
