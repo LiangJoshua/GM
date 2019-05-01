@@ -33,46 +33,60 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      draftedPlayers: []
+      draftedPlayers: [],
+      loggedIn: false
     };
   }
 
   componentDidMount() {
-    const requestUrl =
-      "http://127.0.0.1:5000/get_team?user=" + this.props.user.name;
-    axios.get(requestUrl).then(response => {
-      console.log(response);
-      this.setState({
-        draftedPlayers: response.data
+    if (this.props.user) {
+      const requestUrl =
+        "http://127.0.0.1:5000/get_team?user=" + this.props.user.name;
+      axios.get(requestUrl).then(response => {
+        console.log(response);
+        this.setState({
+          draftedPlayers: response.data,
+          loggedIn: true
+        });
       });
-    });
+    } else {
+      this.setState({ loggedIn: false });
+    }
   }
   render() {
     return (
       <Grid container direction="column" justify="center" alignItems="center">
-        <Avatar
-          alt={this.props.user.name}
-          src={this.props.user.imageUrl}
-          style={styles.avatar}
-        />
-        <Typography variant="h2">{this.props.user.name}</Typography>
-        <Typography variant="h3" style={styles.grid}>
-          Your team
-        </Typography>
-        <div style={styles.grid}>
-          <GridList cols={3.5} style={styles.gridlist}>
-            {this.state.draftedPlayers.map(drafted => {
-              const playerInfo = players.find(player => player.name == drafted);
-              return (
-                <GridListTile key={playerInfo.info.img}>
-                  <img src={playerInfo.info.img} />
-                  <GridListTileBar title={playerInfo.name} />
-                </GridListTile>
-              );
-            })}
-            ;
-          </GridList>
-        </div>
+        {this.state.loggedIn ? (
+          <div>
+            <Avatar
+              alt={this.props.user.name}
+              src={this.props.user.imageUrl}
+              style={styles.avatar}
+            />
+            <Typography variant="h2">{this.props.user.name}</Typography>
+            <Typography variant="h3" style={styles.grid}>
+              Your team
+            </Typography>
+            <div style={styles.grid}>
+              <GridList cols={3.5} style={styles.gridlist}>
+                {this.state.draftedPlayers.map(drafted => {
+                  const playerInfo = players.find(
+                    player => player.name == drafted
+                  );
+                  return (
+                    <GridListTile key={playerInfo.info.img}>
+                      <img src={playerInfo.info.img} />
+                      <GridListTileBar title={playerInfo.name} />
+                    </GridListTile>
+                  );
+                })}
+                ;
+              </GridList>
+            </div>
+          </div>
+        ) : (
+          <Typography>Please log in!</Typography>
+        )}
       </Grid>
     );
   }

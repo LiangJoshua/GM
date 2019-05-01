@@ -7,6 +7,7 @@ import "./App.css";
 import Home from "./Home";
 import DraftingPage from "./DraftingPage";
 import Profile from "./Profile";
+import Compete from "./Compete";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -95,6 +96,9 @@ class App extends Component {
                         Drafting
                       </ListItem>
                       <ListItem button onClick={this.handleClose}>
+                        Compete
+                      </ListItem>
+                      <ListItem button onClick={this.handleClose}>
                         Logout
                       </ListItem>
                     </List>
@@ -133,6 +137,7 @@ class App extends Component {
             {this.state.selectedTab === "Profile" && (
               <Profile user={this.state.user} />
             )}
+            {this.state.selectedTab === "Compete" && <Compete />}
             {this.state.selectedTab === "Drafting" && (
               <DraftingPage user={this.state.user} />
             )}
