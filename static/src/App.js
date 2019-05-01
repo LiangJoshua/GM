@@ -133,7 +133,9 @@ class App extends Component {
             {this.state.selectedTab === "Profile" && (
               <Profile user={this.state.user} />
             )}
-            {this.state.selectedTab === "Drafting" && <DraftingPage />}
+            {this.state.selectedTab === "Drafting" && (
+              <DraftingPage user={this.state.user} />
+            )}
           </div>
         </MuiThemeProvider>
       </Provider>

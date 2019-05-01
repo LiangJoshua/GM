@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from "axios";
+
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
@@ -34,13 +36,17 @@ function Transition(props) {
 }
 
 class DraftingPage extends Component {
-  state = {
-    draftedPlayers: [],
-    showLearnMore: false,
-    showPlayer: null,
-    showPlayerInfo: null,
-    submission: false
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      draftedPlayers: [],
+      showLearnMore: false,
+      showPlayer: null,
+      showPlayerInfo: null,
+      submission: false
+    };
+  }
 
   handleDialogOpen = event => {
     console.log(event);
@@ -57,6 +63,18 @@ class DraftingPage extends Component {
 
   handleSubmissionClose = () => {
     this.setState({ submission: false });
+  };
+
+  handleSubmit = () => {
+    this.setState({ submission: false });
+    const data = {
+      user: this.props.user.name,
+      team: this.state.draftedPlayers
+    };
+
+    axios.post("http://127.0.0.1:5000/store_team", data).then(response => {
+      console.log(response);
+    });
   };
 
   render() {
@@ -228,11 +246,7 @@ class DraftingPage extends Component {
               <Button onClick={this.handleSubmissionClose} color="primary">
                 Not Ready
               </Button>
-              <Button
-                onClick={this.handleSubmissionClose}
-                color="primary"
-                autoFocus
-              >
+              <Button onClick={this.handleSubmit} color="primary" autoFocus>
                 Submit
               </Button>
             </DialogActions>
