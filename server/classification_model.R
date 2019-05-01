@@ -1,7 +1,7 @@
 # What does it take to be an NBA championship team? Classification Model?
 library(tidyverse)
 library(caret)
-
+setwd('~/desktop/github/gm/server')
 
 champs <- read_csv(file = "data/champs_2000.csv")
 runners <- read_csv(file = "data/runners_2000.csv")
@@ -122,8 +122,8 @@ kable(summary(PTS_HomeVsAway_test)[[1]])
 #Building a model to predict Wins and Losses for both champs and runners up. 
 #Fist start with a full model that has all potentially meaningful variables, 
 #and work backwards from there to minimize AIC.
-WL <- glm(data = fullPostSeasons_train, 
-          formula = Win ~ PTS + FGP + TPP + 
+WL <- glm(data = fullPostSeasons, 
+          formula = Win ~ Home + FGP + TPP +
             FTP + TRB + STL + BLK + TOV + PF + AST, 
           family = "binomial")
 
@@ -145,6 +145,6 @@ preds <- predict(backWL, test, type = "response") %>%
 preds_table <- table(preds, test$Win)
 confusionMatrix(preds_table)
 
-
+#Logistic Regression Done... Similar to Binomial Regression
 
 
