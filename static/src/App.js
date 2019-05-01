@@ -29,7 +29,7 @@ const rootStyle = {
   flexGrow: 1,
   backgroundColor: "#282c34",
   backgroundRepeat: "repeat",
-  paddingBottom: 100
+  paddingBottom: 10000
 };
 
 const theme = createMuiTheme({
