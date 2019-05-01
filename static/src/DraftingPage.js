@@ -14,10 +14,10 @@ import ExpansionPanelActions from "@material-ui/core/ExpansionPanelActions";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
+// import CardMedia from "@material-ui/core/CardMedia";
 
 import Dialog from "@material-ui/core/Dialog";
-import Slide from "@material-ui/core/Slide";
+// import Slide from "@material-ui/core/Slide";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -139,7 +139,7 @@ class DraftingPage extends Component {
 
               {this.state.draftedPlayers.map(drafted => {
                 const playerInfo = players.find(
-                  player => player.name == drafted
+                  player => player.name === drafted
                 );
 
                 return (
@@ -176,7 +176,7 @@ class DraftingPage extends Component {
                         onClick={() => {
                           this.setState({
                             draftedPlayers: this.state.draftedPlayers.filter(
-                              p => p != playerInfo.name
+                              p => p !== playerInfo.name
                             )
                           });
                         }}

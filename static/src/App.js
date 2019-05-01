@@ -6,6 +6,7 @@ import gmApp from "./reducers";
 import "./App.css";
 import Home from "./Home";
 import DraftingPage from "./DraftingPage";
+import WinningProbPage from "./WinningProbPage";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -85,6 +86,9 @@ class App extends Component {
                         Drafting
                       </ListItem>
                       <ListItem button onClick={this.handleClose}>
+                        Win Prob
+                      </ListItem>
+                      <ListItem button onClick={this.handleClose}>
                         Logout
                       </ListItem>
                     </List>
@@ -103,6 +107,7 @@ class App extends Component {
 
             {this.state.selectedTab === "Home" && <Home />}
             {this.state.selectedTab === "Profile" && <Home />}
+            {this.state.selectedTab === "Win Prob" && <WinningProbPage />}
             {this.state.selectedTab === "Drafting" && <DraftingPage />}
           </div>
         </MuiThemeProvider>
