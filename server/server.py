@@ -22,7 +22,13 @@ def index():
 
 @app.route("/get_team", methods=["GET"])
 def get_team():
-    print()
+    winning_probability([
+    "Bradley beal",
+    "Bismack Biyombo",
+    "Blake Griffin",
+    "Stephen Curry",
+    "Lebron James"
+])
     data = mongo.db.user_draftedTeams.find({'name':request.args.get('user')})
     players = []
     for d in data:
@@ -35,7 +41,7 @@ def get_team():
 @app.route("/store_team", methods=["POST"])
 def store_team():
     #print (request.json)
-    #TODO store this in MongoDB
+
     data = request.get_json(force=True)
     print (data['user'])
     print (data['team'])
@@ -51,20 +57,64 @@ def store_team():
 
     return jsonify(success=True)
 
-@app.route("/testMongo")
-def testdb():
-    print("hello world")
-    data = []
-    atl = mongo.db.players.find({"Tm": "ATL"})
+def find_player_stats(playerName):
+    searchPhrase = "\""+playerName+"\""
+    playerInfo = mongo.db.players.find_one({'$text': {'$search': searchPhrase} })
 
-    for a in atl:
-        a.pop('_id')
-        data.append(a)
+    playerStats = {"FGP": 0 if isinstance (playerInfo["FG%"], str) else playerInfo["FG%"],
+    "TPP":0 if isinstance (playerInfo["3P%"], str) else playerInfo["3P%"],
+    "TRB":0 if isinstance (playerInfo["TRB"], str) else playerInfo["TRB"],
+    "STL": 0 if isinstance (playerInfo["STL"], str) else playerInfo["STL"],
+    "TOV": 0 if isinstance (playerInfo["TOV"], str) else playerInfo["TOV"],
+    "AST": 0 if isinstance (playerInfo["AST"], str) else playerInfo["AST"]}
 
-    return jsonify({"response": data})
-    #for a in atl:
-        #print(a)
-    #return atl
+    print(playerStats)
+
+    return playerStats
+
+def calculate_averages(listOfPlayers):
+    averages = {"FGP": 0,
+    "TPP": 0,
+    "TRB": 0,
+    "STL": 0,
+    "TOV": 0,
+    "AST": 0 }
+
+    for p in listOfPlayers:
+        p_stats = find_player_stats(p)
+        averages["FGP"] = averages["FGP"] + p_stats["FGP"]
+        averages["TPP"] = averages["TPP"] + p_stats["TPP"]
+        averages["TRB"] = averages["TRB"] + p_stats["TRB"]
+        averages["STL"] = averages["STL"] + p_stats["STL"]
+        averages["TOV"] = averages["TOV"] + p_stats["TOV"]
+        averages["AST"] = averages["AST"] + p_stats["AST"]
+
+    averages["FGP"] = averages["FGP"] /5
+    averages["TPP"] = averages["TPP"]/5
+    averages["TRB"] = averages["TRB"] /5
+    averages["STL"] = averages["STL"] /5
+    averages["TOV"] = averages["TOV"] /5
+    averages["AST"] = averages["AST"] /5
+
+    print (averages)
+
+    return averages
+
+def winning_probability(listOfPlayers):
+    averages = calculate_averages(listOfPlayers)
+
+    FGP = 39.26539
+    TPP = 8.21720
+    TRB = 0.32225
+    STL = 0.24128
+    TOV = -0.22237
+    AST = -0.14096
+
+    winning_prob = FGP*averages["FGP"] + TPP*averages["TPP"] + TRB*averages["TRB"] + STL*averages["STL"]+TOV*averages["TOV"]+AST*averages["AST"]
+
+    print(winning_prob)
+
+    return winning_prob
 
 if __name__ == "__main__":
     app.run()
