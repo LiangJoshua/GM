@@ -55,7 +55,7 @@ def store_team():
     except:
         return jsonify(success=False)
 
-    return jsonify(success=True)
+    return jsonify(winning_probability(data['team']))
 
 def find_player_stats(playerName):
     searchPhrase = "\""+playerName+"\""
@@ -68,7 +68,7 @@ def find_player_stats(playerName):
     "TOV": 0 if isinstance (playerInfo["TOV"], str) else playerInfo["TOV"],
     "AST": 0 if isinstance (playerInfo["AST"], str) else playerInfo["AST"]}
 
-    print(playerStats)
+    print(playerInfo)
 
     return playerStats
 
@@ -91,10 +91,7 @@ def calculate_averages(listOfPlayers):
 
     averages["FGP"] = averages["FGP"] /5
     averages["TPP"] = averages["TPP"]/5
-    averages["TRB"] = averages["TRB"] /5
-    averages["STL"] = averages["STL"] /5
-    averages["TOV"] = averages["TOV"] /5
-    averages["AST"] = averages["AST"] /5
+
 
     print (averages)
 
