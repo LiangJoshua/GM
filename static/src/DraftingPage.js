@@ -44,7 +44,8 @@ class DraftingPage extends Component {
       showLearnMore: false,
       showPlayer: null,
       showPlayerInfo: null,
-      submission: false
+      submission: false,
+      winningProb: null
     };
   }
 
@@ -65,6 +66,10 @@ class DraftingPage extends Component {
     this.setState({ submission: false });
   };
 
+  handleWinningClose = () => {
+    this.setState({ winningProb: null });
+  };
+
   handleSubmit = () => {
     this.setState({ submission: false });
     const data = {
@@ -74,6 +79,7 @@ class DraftingPage extends Component {
 
     axios.post("http://127.0.0.1:5000/store_team", data).then(response => {
       console.log(response);
+      this.setState({ winningProb: response.data });
     });
   };
 
@@ -131,7 +137,7 @@ class DraftingPage extends Component {
                                 p.name
                               ),
                               submission:
-                                this.state.draftedPlayers.length + 1 === 6
+                                this.state.draftedPlayers.length + 1 === 5
                                   ? true
                                   : false
                             });
@@ -171,7 +177,7 @@ class DraftingPage extends Component {
           <Grid container direction="column" justify="space-evenly">
             <div style={{ textAlign: "center" }}>
               <h1 style={{ color: "#FFF" }}>
-                Your Players ({this.state.draftedPlayers.length}/6)
+                Your Players ({this.state.draftedPlayers.length}/5)
               </h1>
 
               {this.state.draftedPlayers.map(drafted => {
@@ -238,7 +244,7 @@ class DraftingPage extends Component {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                You have drafted 6 players. Click 'Submit' to view your winning
+                You have drafted 5 players. Click 'Submit' to view your winning
                 probability.
               </DialogContentText>
             </DialogContent>
@@ -248,6 +254,32 @@ class DraftingPage extends Component {
               </Button>
               <Button onClick={this.handleSubmit} color="primary" autoFocus>
                 Submit
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          <Dialog
+            open={this.state.winningProb}
+            onClose={this.handleSubmissionClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle
+              id="alert-dialog-title"
+              style={{
+                textAlign: "center"
+              }}
+            >
+              Your chance of winning
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText variant="h1">
+                {parseFloat(this.state.winningProb).toFixed(2)}%
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleWinningClose} color="primary">
+                OKAY
               </Button>
             </DialogActions>
           </Dialog>
