@@ -20,8 +20,7 @@ import Drawer from "@material-ui/core/Drawer";
 
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
-// import { players } from "./constants/players";
-// import PlayerInfoPage from "./playerInfoPage";
+import { GoogleLogin, GoogleLogout } from "react-google-login";
 
 const store = createStore(gmApp);
 
@@ -41,7 +40,8 @@ const theme = createMuiTheme({
 class App extends Component {
   state = {
     anchorEl: false,
-    selectedTab: "Home"
+    selectedTab: "Home",
+    loggedIn: false
   };
 
   handleClick = event => {
@@ -57,7 +57,11 @@ class App extends Component {
   };
 
   render() {
-    // const { anchorEl } = this.state;
+    const responseGoogle = response => {
+      console.log(response);
+
+      this.setState({ loggedIn: true });
+    };
 
     return (
       <Provider store={store}>
@@ -97,7 +101,21 @@ class App extends Component {
                 >
                   GM
                 </Typography>
-                <Button color="inherit">Login</Button>
+                {this.state.loggedIn ? (
+                  <GoogleLogout
+                    buttonText="Logout"
+                    onLogoutSuccess={response => {
+                      this.setState({ loggedIn: false });
+                    }}
+                  />
+                ) : (
+                  <GoogleLogin
+                    clientId="410077450126-6j2s5hc9343rmsaj3urj2j91ag3ljnhb.apps.googleusercontent.com"
+                    buttonText="LOGIN WITH GOOGLE"
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                  />
+                )}
               </Toolbar>
             </AppBar>
 
