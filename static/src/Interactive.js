@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import io from "socket.io-client";
 
-const addMessage = function(data) {
-  console.log(data);
-  this.setState({ messages: [...this.state.messages, data] });
-  console.log(this.state.messages);
-};
-
 class Interactive extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +21,12 @@ class Interactive extends Component {
     this.socket.on("RECEIVE_MESSAGE", function(data) {
       addMessage(data);
     });
+
+    const addMessage = data => {
+      console.log(data);
+      this.setState({ messages: [...this.state.messages, data] });
+      console.log(this.state.messages);
+    };
   }
 
   render() {
@@ -40,11 +40,7 @@ class Interactive extends Component {
                 <hr />
                 <div>
                   {this.state.messages.map(message => {
-                    return (
-                      <div>
-                        {message.author}: {message.message}
-                      </div>
-                    );
+                    return <div>{message}</div>;
                   })}
                 </div>
                 <div>

@@ -26,13 +26,6 @@ def index():
 
 @app.route("/get_team", methods=["GET"])
 def get_team():
-    winning_probability([
-    "Bradley beal",
-    "Bismack Biyombo",
-    "Blake Griffin",
-    "Stephen Curry",
-    "Lebron James"
-])
     data = mongo.db.user_draftedTeams.find({'name':request.args.get('user')})
     players = []
     for d in data:
@@ -123,7 +116,7 @@ def winning_probability(listOfPlayers):
 @socketio.on('SEND_MESSAGE')
 def send_message(data):
     print('recieve data'+data)
-    emit('RECEIVE_MESSAGE', data)
+    emit('RECEIVE_MESSAGE', data, broadcast=True)
 
 if __name__ == "__main__":
     socketio.run(app)
