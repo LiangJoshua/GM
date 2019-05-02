@@ -10,6 +10,7 @@ import math
 from flask import Flask, jsonify
 from flask_pymongo import PyMongo
 from flask_cors import CORS
+from flask_socketio import SocketIO, emit, send
 from flask import request
 from bson.json_util import dumps
 
@@ -17,6 +18,7 @@ app = Flask(__name__)
 CORS(app)
 app.config["MONGO_URI"] = "mongodb://faithchau:faith114@ds119702.mlab.com:19702/gm"
 mongo = PyMongo(app)
+socketio = SocketIO(app)
 
 @app.route("/")
 def index():
@@ -118,5 +120,10 @@ def winning_probability(listOfPlayers):
 
     return winning_prob*100
 
+@socketio.on('SEND_MESSAGE')
+def send_message(data):
+    print('recieve data'+data)
+    emit('RECEIVE_MESSAGE', data)
+
 if __name__ == "__main__":
-    app.run()
+    socketio.run(app)
