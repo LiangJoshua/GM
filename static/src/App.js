@@ -137,7 +137,9 @@ class App extends Component {
             {this.state.selectedTab === "Profile" && (
               <Profile user={this.state.user} />
             )}
-            {this.state.selectedTab === "Interactive" && <Interactive />}
+            {this.state.selectedTab === "Interactive" && (
+              <Interactive user={this.state.user} />
+            )}
             {this.state.selectedTab === "Drafting" && (
               <DraftingPage user={this.state.user} />
             )}
