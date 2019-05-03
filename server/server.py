@@ -114,9 +114,8 @@ def winning_probability(listOfPlayers):
     return winning_prob*100
 
 @socketio.on('SEND_MESSAGE')
-def send_message(data):
-    print('recieve data'+data)
-    emit('RECEIVE_MESSAGE', data, broadcast=True)
+def send_message(json):
+    emit('RECEIVE_MESSAGE', json, broadcast=True)
 
 if __name__ == "__main__":
     socketio.run(app)
