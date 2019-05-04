@@ -5,6 +5,7 @@ setwd('~/desktop/github/gm/server')
 
 champs <- read_csv(file = "data/champs_2000.csv")
 runners <- read_csv(file = "data/runners_2000.csv")
+players <- read_csv(file="data/players.csv")
 test <- read_csv(file = "data/test.csv")
 test1 <- read_csv(file="data/champs_copy.csv")
 # colnames(champs)
@@ -26,6 +27,10 @@ runners <- runners %>%
   mutate(Home = as.factor(Home)) %>%
   rename(X = Y)
 
+players <- players %>%
+  mutate(TPP = as.factor(TPP)) %>%
+  mutate(id = 1:(nrow(players)*1))
+
 test %>%
   select(Team) %>%
   distinct()
@@ -39,6 +44,10 @@ test1 <- test1 %<%
   mutate(Win = as.factor(Win)) %>%
   mutate(Home = as.factor(Home)) %>%
   mutate(X = as.numeric(X))
+
+players_train <- sample_frac(players, 0.5)
+players_test <- anti_join(players,players_train,by = 'id')
+
 #Combine champs and runners with a row bind, then split 75-25 
 #into a training and test set respectively using an anti-join
 fullPostSeasons <- bind_rows(champs,runners) %>%
@@ -52,65 +61,6 @@ fullPostSeasons_test <- anti_join(fullPostSeasons,fullPostSeasons_train,by = 'id
 champs %>%
   select(Team) %>%
   distinct()
-
-#Plotting points of champion teams in each game since 1980.
-ggplot(data = champs, 
-       aes(x = Year, y = PTS, color = Team, shape = Win)) + 
-  geom_point(size = 1) +
-  scale_x_continuous(breaks = 1980:2017) +
-  theme_dark() +
-  scale_color_brewer(palette = "Paired") + 
-  theme(axis.text.x = element_text(size = 3, angle = 45),
-        axis.text.y = element_text(size = 6, angle = 45)) +
-  facet_wrap(~ Home, labeller = "label_both") + 
-  ylab("Points Scored")
-
-#Plotting field goal percentage of champion team in each game since 1980.
-ggplot(data = champs, 
-       aes(x = Year, y = FGP, color = Team, shape = Win)) + 
-  geom_hline(yintercept = 0.50, size = 0.25, color = "gray95") + 
-  geom_point(size = 1) +
-  scale_x_continuous(breaks = 1980:2017) +
-  scale_y_continuous(breaks = seq(0,1,by = 0.05), limits = c(0,1)) + 
-  theme_dark() +
-  scale_color_brewer(palette = "Paired") +
-  theme(axis.text.x = element_text(size = 3, angle = 45),
-        axis.text.y = element_text(size = 6, angle = 45)) +
-  facet_wrap(~ Home, labeller = "label_both") + 
-  ylab("Field Goal Percentage")
-
-#Plotting three point percentage of champion team in each game since 1980.
-ggplot(data = champs, 
-       aes(x = Year, y = TPP, color = Team, shape = Win)) + 
-  geom_point(size = 1) +
-  scale_x_continuous(breaks = 1980:2017) +
-  scale_y_continuous(breaks = seq(0,1,by = 0.05), limits = c(0,1)) + 
-  theme_dark() +
-  scale_color_brewer(palette = "Paired") +
-  theme(axis.text.x = element_text(size = 3, angle = 45),
-        axis.text.y = element_text(size = 6, angle = 45)) + 
-  facet_wrap(~ Home, labeller = "label_both") + 
-  ylab("Three Point Percentage")
-
-#Plotting free throw percentage of champion team in each game since 1980.
-ggplot(data = champs, 
-       aes(x = Year, y = FTP, color = Team, shape = Win)) + 
-  geom_point(size = 1) +
-  scale_x_continuous(breaks = 1980:2017) +
-  scale_y_continuous(breaks = seq(0,1,by = 0.05), limits = c(0,1)) + 
-  theme_dark() +
-  scale_color_brewer(palette = "Paired") +
-  theme(axis.text.x = element_text(size = 3, angle = 45),
-        axis.text.y = element_text(size = 6, angle = 45)) +
-  facet_wrap(~ Home, labeller = "label_both") + 
-  ylab("Free Throw Percentage")
-
-ggplot(data = fullPostSeasons, 
-       aes(x = Home, y = PTS, fill = Win)) + 
-  geom_violin() + 
-  theme_dark() +
-  scale_fill_brewer(palette = "Paired") + 
-  ylab("Points Scored")
 
 #Does home court advantage really lead to more points scored?
 PTS_HomeVsAway_test <- aov(data = fullPostSeasons, formula = PTS ~ Home)
@@ -145,7 +95,20 @@ preds <- predict(backWL, test, type = "response") %>%
 preds_table <- table(preds, test$Win)
 confusionMatrix(preds_table)
 
-plot(WL)
+
 #Logistic Regression Done... Similar to Binomial Regression
 
+TPP <- glm(data = players_train, 
+          formula = TPP ~ FGP + eFGP)
 
+# Use backwards step-wise regression to build highly predictive model without overfitting
+backTPP <- step(TPP, trace = 0)
+summary(TPP)
+
+preds1 <- predict(backTPP, players_test, type = "response") %>%
+  round()
+
+preds_table1 <- table(preds1, players_test$TPP)
+confusionMatrix(preds_table1)
+
+plot(WL)
