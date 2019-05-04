@@ -114,8 +114,9 @@ def winning_probability(listOfPlayers):
     return winning_prob*100
 
 @socketio.on('CONNECT')
-def connect(message):
-    emit('RECEIVE_CONNECTION', message,broadcast=True)
+def connect(json_data):
+    print(json_data)
+    emit('RECEIVE_CONNECTION', json_data,broadcast=True)
 
 @socketio.on('SEND_MESSAGE')
 def send_message(json_data):
@@ -128,6 +129,7 @@ def send_score(json_data):
     score = {}
     score["action"] = "hi this is working"
     emit('RECEIVE_MESSAGE', score, broadcast=True)
+    emit('RECEIVE_SCORE', json_data['opponent'], broadcast=True)
 
 if __name__ == "__main__":
     socketio.run(app)

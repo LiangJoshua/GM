@@ -12,6 +12,7 @@ import Select from "@material-ui/core/Select";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
+import Badge from "@material-ui/core/Badge";
 
 import strategies from "./constants/strategies";
 
@@ -47,6 +48,13 @@ const styles = {
     color: "black",
     paddingLeft: 20,
     paddingTop: 10
+  },
+  scorePaper: {
+    width: 250,
+    borderRight: "0.1em solid black",
+    padding: "0.5em",
+    marginRight: 30,
+    display: "inline-block"
   }
 };
 class Interactive extends Component {
@@ -60,7 +68,10 @@ class Interactive extends Component {
       draftedPlayers: [],
       defense: true,
       initial: true,
-      opponent: ""
+      opponent: "",
+      opponentImage: "",
+      score: 0,
+      opponentScore: 0
     };
 
     this.sendMessage = ev => {
@@ -80,7 +91,8 @@ class Interactive extends Component {
       this.socket.emit("SEND_SCORE", {
         user: this.props.user.imageUrl,
         userName: this.props.user.name,
-        action: "Guard with " + this.state.player
+        action: "Guard with " + this.state.player,
+        opponent: this.state.opponent
       });
       this.setState({
         defense: !this.state.defense
@@ -93,7 +105,13 @@ class Interactive extends Component {
       console.log(message);
       this.setState({
         opponent:
-          this.props.user.name !== message ? message : this.state.opponent
+          this.props.user.name !== message.opponent
+            ? message.opponent
+            : this.state.opponent,
+        opponentImage:
+          this.props.user.imageUrl !== message.opponentImage
+            ? message.opponentImage
+            : this.state.opponentImage
       });
     });
 
@@ -109,6 +127,15 @@ class Interactive extends Component {
         move: ""
       });
     };
+
+    this.socket.on("RECEIVE_SCORE", data => {
+      console.log(data);
+      this.setState(
+        data === this.props.user.name
+          ? { score: this.state.score + 1 }
+          : { opponentScore: this.state.opponentScore + 1 }
+      );
+    });
   }
 
   componentDidMount() {
@@ -135,7 +162,6 @@ class Interactive extends Component {
   render() {
     return (
       <Grid container direction="column" justify="center" alignItems="center">
-        <Typography variant="h2"> Game with {this.state.opponent}</Typography>
         <div>
           {this.state.moves.map(move => {
             console.log(move);
@@ -169,7 +195,10 @@ class Interactive extends Component {
               color="primary"
               variant="contained"
               onClick={() => {
-                this.socket.emit("CONNECT", this.props.user.name);
+                this.socket.emit("CONNECT", {
+                  opponent: this.props.user.name,
+                  opponentImage: this.props.user.imageUrl
+                });
                 this.setState({
                   defense: false,
                   initial: false
@@ -182,7 +211,10 @@ class Interactive extends Component {
               color="primary"
               variant="contained"
               onClick={() => {
-                this.socket.emit("CONNECT", this.props.user.name);
+                this.socket.emit("CONNECT", {
+                  opponent: this.props.user.name,
+                  opponentImage: this.props.user.imageUrl
+                });
                 this.setState({
                   defense: true,
                   initial: false
@@ -194,56 +226,87 @@ class Interactive extends Component {
           </Paper>
         ) : (
           <Paper style={styles.paper}>
-            <Typography variant="h5">
-              {this.state.defense
-                ? "Pick a player to guard"
-                : "Pick a player to complete a strategy"}
-            </Typography>
-            {this.state.defense ? (
-              <FormControl disabled style={styles.formControl}>
-                <InputLabel>Move</InputLabel>
-                <Select
-                  value={this.state.move}
-                  onChange={this.handleMoveChange}
-                  autoWidth
+            <Grid container direction="row">
+              <div style={styles.scorePaper}>
+                <Typography variant="h5" style={{ paddingBottom: 10 }}>
+                  Score
+                </Typography>
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
                 >
-                  {Object.keys(strategies.offense).map(o => {
-                    return <MenuItem value={o}>{o}</MenuItem>;
-                  })}
-                </Select>
-              </FormControl>
-            ) : (
-              <FormControl style={styles.formControl}>
-                <InputLabel>Move</InputLabel>
-                <Select
-                  value={this.state.move}
-                  onChange={this.handleMoveChange}
-                  autoWidth
+                  <div style={{ paddingRight: 50 }}>
+                    <Badge badgeContent={this.state.score} color="primary">
+                      <Avatar src={this.props.user.imageUrl} />
+                    </Badge>
+                  </div>
+                  <div>
+                    <Badge
+                      badgeContent={this.state.opponentScore}
+                      color="primary"
+                    >
+                      <Avatar src={this.state.opponentImage} />
+                    </Badge>
+                  </div>
+                </Grid>
+              </div>
+              <div>
+                <Typography variant="h5">
+                  {this.state.defense
+                    ? "Pick a player to guard"
+                    : "Pick a player to complete a strategy"}
+                </Typography>
+                {this.state.defense ? (
+                  <FormControl disabled style={styles.formControl}>
+                    <InputLabel>Move</InputLabel>
+                    <Select
+                      value={this.state.move}
+                      onChange={this.handleMoveChange}
+                      autoWidth
+                    >
+                      {Object.keys(strategies.offense).map(o => {
+                        return <MenuItem value={o}>{o}</MenuItem>;
+                      })}
+                    </Select>
+                  </FormControl>
+                ) : (
+                  <FormControl style={styles.formControl}>
+                    <InputLabel>Move</InputLabel>
+                    <Select
+                      value={this.state.move}
+                      onChange={this.handleMoveChange}
+                      autoWidth
+                    >
+                      {Object.keys(strategies.offense).map(o => {
+                        return <MenuItem value={o}>{o}</MenuItem>;
+                      })}
+                    </Select>
+                  </FormControl>
+                )}
+                <FormControl style={styles.formControl}>
+                  <InputLabel>Player</InputLabel>
+                  <Select
+                    value={this.state.player}
+                    onChange={this.handlePlayerChange}
+                  >
+                    {this.state.draftedPlayers.map(p => {
+                      return <MenuItem value={p}>{p}</MenuItem>;
+                    })}
+                  </Select>
+                </FormControl>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={
+                    !this.state.defense ? this.sendMessage : this.sendScore
+                  }
                 >
-                  {Object.keys(strategies.offense).map(o => {
-                    return <MenuItem value={o}>{o}</MenuItem>;
-                  })}
-                </Select>
-              </FormControl>
-            )}
-            <FormControl style={styles.formControl}>
-              <InputLabel>Player</InputLabel>
-              <Select
-                value={this.state.player}
-                onChange={this.handlePlayerChange}
-              >
-                {this.state.draftedPlayers.map(p => {
-                  return <MenuItem value={p}>{p}</MenuItem>;
-                })}
-              </Select>
-            </FormControl>
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={!this.state.defense ? this.sendMessage : this.sendScore}
-            >
-              Submit
-            </Button>
+                  Submit
+                </Button>
+              </div>
+            </Grid>
           </Paper>
         )}
         ;
