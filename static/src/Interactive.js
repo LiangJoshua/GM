@@ -15,8 +15,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Badge from "@material-ui/core/Badge";
 
 import strategies from "./constants/strategies";
-
-console.log(strategies.offense);
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const styles = {
   paper: {
@@ -71,7 +71,9 @@ class Interactive extends Component {
       opponent: "",
       opponentImage: "",
       score: 0,
-      opponentScore: 0
+      opponentScore: 0,
+      opponentGameOver: false,
+      gameOver: false
     };
 
     this.sendMessage = ev => {
@@ -132,8 +134,14 @@ class Interactive extends Component {
       console.log(data);
       this.setState(
         data === this.props.user.name
-          ? { score: this.state.score + 1 }
-          : { opponentScore: this.state.opponentScore + 1 }
+          ? {
+              score: this.state.score + 1,
+              gameOver: this.state.score + 1 >= 2 ? true : false
+            }
+          : {
+              opponentScore: this.state.opponentScore + 1,
+              opponentGameOver: this.state.opponentScore + 1 >= 2 ? true : false
+            }
       );
     });
   }
@@ -309,7 +317,36 @@ class Interactive extends Component {
             </Grid>
           </Paper>
         )}
-        ;
+        <Dialog
+          style={{ textAlign: "center" }}
+          open={this.state.gameOver || this.state.opponentGameOver}
+        >
+          <DialogTitle>Game Over!</DialogTitle>
+          <Typography variant="h6">
+            {this.state.gameOver ? "You won!" : "You lost!"}
+          </Typography>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={() => {
+              this.setState({
+                moves: [],
+                move: "",
+                player: "",
+                defense: true,
+                initial: true,
+                opponent: "",
+                opponentImage: "",
+                score: 0,
+                opponentScore: 0,
+                gameOver: false,
+                opponentGameOver: false
+              });
+            }}
+          >
+            Play Again!
+          </Button>
+        </Dialog>
       </Grid>
     );
   }
