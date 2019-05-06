@@ -15,9 +15,11 @@ eighty_to_seventeen  <- ggplot(data = averages,aes(x = Year, y = TP,fill = Statu
   theme(axis.text.x = element_text(angle=90,hjust = 1,vjust = 1)) +
   ggtitle("NBA Finals, 1980-2017")
 
+#plots average three point field goals from 1980-1982 and 1980-2017
 eight_to_eightytwo 
 eighty_to_seventeen
 
+#plots points per game
 points <- ggplot(data = averages, aes(x = Year, y = PTS, color = Status)) +
   geom_point(size = 1) +
   geom_smooth(method = 'loess',se=FALSE) + 
@@ -25,6 +27,7 @@ points <- ggplot(data = averages, aes(x = Year, y = PTS, color = Status)) +
   theme(legend.position="none") +
   ylab('Points')
 
+#plots 3 pointers per game
 tp <- ggplot(data = averages, aes(x = Year, y = TP, color = Status)) +
   geom_point(size = 1) +
   geom_smooth(method = 'loess',se=FALSE) +
@@ -35,6 +38,7 @@ tp <- ggplot(data = averages, aes(x = Year, y = TP, color = Status)) +
 
 percentage_of_points_threes <- averages %>% mutate(Percentage_of_Points_Threes = 3*TP/PTS*100)
 
+#plots % of points from 3's
 ppts_threes <- ggplot(data = percentage_of_points_threes, aes(x = Year, y = Percentage_of_Points_Threes, color = Status)) +
   geom_point(size = 1) +
   geom_smooth(method = 'loess',se=FALSE) +
@@ -43,6 +47,7 @@ ppts_threes <- ggplot(data = percentage_of_points_threes, aes(x = Year, y = Perc
   theme(axis.text.x = element_text(angle=90,hjust = 1,vjust = 1)) +
   theme(legend.position="none")
 
+#plots 3 point percentages
 tpp <- ggplot(data = averages, aes(x = Year, y = TPP, color = Status)) +
   geom_point(size = 1) +
   geom_smooth(method = 'loess',se=FALSE) +
@@ -50,6 +55,7 @@ tpp <- ggplot(data = averages, aes(x = Year, y = TPP, color = Status)) +
   ggtitle('3PT %') +
   ylab('%')
 
+#plots 3 point attempts per game
 tpa <- ggplot(data = averages, aes(x = Year, y = TPA, color = Status)) +
   geom_point(size = 1) +
   geom_smooth(method = 'loess',se=FALSE) +
@@ -108,4 +114,5 @@ per_attempts_by_decade <- ggplot(data = by_decade,aes(x = Years, y = Percentage_
   theme(legend.position="none") +
   ylab("%") 
 
+#plot all the graphs
 grid.arrange(scoring_by_decade,tp_by_decade,per_points_tp_by_decade,tpp_by_decade,tpa_by_decade,per_attempts_by_decade,ncol=3)
