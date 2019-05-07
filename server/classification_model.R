@@ -1,6 +1,8 @@
 # What does it take to be an NBA championship team? Classification Model?
 library(tidyverse)
 library(caret)
+library(ggplot2)
+library(tidyr)
 setwd('~/desktop/github/gm/server')
 
 champs <- read_csv(file = "data/champs_2000.csv")
@@ -80,6 +82,51 @@ WL <- glm(data = fullPostSeasons,
 # Use backwards step-wise regression to build highly predictive model without overfitting
 backWL <- step(WL, trace = 0)
 summary(backWL)
+backWL
+
+# b0 <- backWL$coef[1]
+# FGP <- backWL$coef[2]
+# TPP <- backWL$coef[3]
+# TRB <- backWL$coef[4]
+# STL <- backWL$coef[5]
+# TOV <- backWL$coef[6]
+# AST <- backWL$coef[7]
+# 
+# FGP_range <- seq(from=min(fullPostSeasons$FGP), to=max(fullPostSeasons$FGP), by=.1)
+# FGP_val <- mean(fullPostSeasons$FGP)
+# TPP_val <- mean(fullPostSeasons$TPP)
+# TRB_val <- mean(fullPostSeasons$TRB)
+# STL_val <- mean(fullPostSeasons$STL)
+# TOV_val <- mean(fullPostSeasons$TOV)
+# AST_val <- mean(fullPostSeasons$AST)
+# 
+# fgp_logits <- b0 + 
+#   FGP*FGP_val + 
+#   TPP*TPP_val*0 + 
+#   TRB*TRB_val*0 + 
+#   STL*STL_val*0 + 
+#   TOV*TOV_val*0 +
+#   AST*AST_val*0 # the reference group
+# 
+# tpp_logits <- b0 + 
+#   FGP*FGP_val*0 + 
+#   TPP*TPP_val + 
+#   TRB*TRB_val*0 + 
+#   STL*STL_val*0 + 
+#   TOV*TOV_val*0 +
+#   AST*AST_val*0 # the reference group
+# 
+# # Compute the probibilities (this is what will actually get plotted):
+# FGP_probs <- exp(fgp_logits)/(1 + exp(fgp_logits))
+# TPP_probs <- exp(tpp_logits)/(1 + exp(tpp_logits))
+# 
+# plot.data <- data.frame(FGP=FGP_probs, TPP=TPP_probs, X1=FGP_range)
+# plot.data <- gather(plot.data, key=group, value=prob, FGP:TPP)
+# head(plot.data)
+# 
+# ggplot(plot.data, aes(x=X1, y=prob, color=group)) + # asking it to set the color by the variable "group" is what makes it draw three different lines
+#   geom_line(lwd=2) + 
+#   labs(x="FGP", y="P(outcome)", title="Probability of super important outcome") 
 
 #Interestingly, backwards step-wise logistic regression eliminated the home court variable 
 #from the model to minimize AIC. So, even though the ANOVA test of PTS ~ Home indicated that 
@@ -98,17 +145,5 @@ confusionMatrix(preds_table)
 
 #Logistic Regression Done... Similar to Binomial Regression
 
-TPP <- glm(data = players_train, 
-          formula = TPP ~ FGP + eFGP)
-
-# Use backwards step-wise regression to build highly predictive model without overfitting
-backTPP <- step(TPP, trace = 0)
-summary(TPP)
-
-preds1 <- predict(backTPP, players_test, type = "response") %>%
-  round()
-
-preds_table1 <- table(preds1, players_test$TPP)
-confusionMatrix(preds_table1)
 
 plot(WL)
