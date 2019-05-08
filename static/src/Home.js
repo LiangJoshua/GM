@@ -3,21 +3,26 @@ import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-const titleStyle = {
-  paddingTop: 100,
-  paddingBottom: 100
+const styles = {
+  titleStyle: {
+    paddingBottom: 50,
+    color: "orangered"
+  },
+  substitle: {
+    paddingBottom: 20
+  }
 };
-
 class Home extends Component {
   render() {
     return (
-      <div align="center">
-        <Typography variant="h1" style={titleStyle}>
-          Sign-up now to Play!
+      <div align="center" style={{ paddingTop: 30 }}>
+        <Typography style={styles.subtitle} variant="h3">
+          the
         </Typography>
-        <Button color="secondary" variant="contained">
-          Sign up
-        </Button>
+        <Typography variant="h1" style={styles.titleStyle}>
+          General Manager.
+        </Typography>
+        <img src={require("./img/basketball.png")} height="300" width="200" />
       </div>
     );
   }
