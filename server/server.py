@@ -6,10 +6,12 @@
 # To quit: Press CTRL+C to quit
 
 import math
+import random
 
 from flask import Flask, jsonify
 from flask_pymongo import PyMongo
 from flask_cors import CORS
+from flask_socketio import SocketIO, emit, send
 from flask import request
 from bson.json_util import dumps
 
@@ -17,6 +19,7 @@ app = Flask(__name__)
 CORS(app)
 app.config["MONGO_URI"] = "mongodb://faithchau:faith114@ds119702.mlab.com:19702/gm"
 mongo = PyMongo(app)
+socketio = SocketIO(app)
 
 @app.route("/")
 def index():
@@ -24,21 +27,12 @@ def index():
 
 @app.route("/get_team", methods=["GET"])
 def get_team():
-    winning_probability([
-    "Bradley beal",
-    "Bismack Biyombo",
-    "Blake Griffin",
-    "Stephen Curry",
-    "Lebron James"
-])
     data = mongo.db.user_draftedTeams.find({'name':request.args.get('user')})
     players = []
     for d in data:
         players= d['team']
 
     return jsonify(players)
-
-
 
 @app.route("/store_team", methods=["POST"])
 def store_team():
@@ -118,5 +112,81 @@ def winning_probability(listOfPlayers):
 
     return winning_prob*100
 
+@socketio.on('CONNECT')
+def connect(json_data):
+    emit('RECEIVE_CONNECTION', json_data,broadcast=True)
+
+@socketio.on('SEND_MESSAGE')
+def send_message(json_data):
+    emit('RECEIVE_MESSAGE', json_data, broadcast=True)
+
+@socketio.on('SEND_SCORE')
+def send_score(json_data):
+    emit('RECEIVE_MESSAGE', json_data, broadcast=True)
+    pastMove = json_data['pastMove']
+    result = getScore(pastMove['player'], json_data['player'], pastMove['action'])
+    score = {}
+    
+    if result:
+        score["action"] = pastMove['player'] +" scores!"
+        emit('RECEIVE_SCORE', pastMove['userName'], broadcast=True)
+    else:
+        score["action"]= json_data['player']+" blocks!"
+
+    emit('RECEIVE_MESSAGE', score, broadcast=True)
+
+
+def getOffenseEfg(player, strategy):
+
+    playerInfo = {}
+
+    if strategy == 'handoff':
+        playerInfo = mongo.db.handoff_offense.find_one({'PLAYER_NAME': player})
+    elif strategy == 'isolation':
+        playerInfo = mongo.db.isolation_offense.find_one({'PLAYER_NAME': player})
+    elif strategy == 'off screen':
+        playerInfo = mongo.db.off_screen_offense.find_one({'PLAYER_NAME': player})
+    elif strategy == 'pick handler':
+        playerInfo = mongo.db.pick_handler_offense.find_one({'PLAYER_NAME': player})
+    elif strategy == 'pick man':
+        playerInfo = mongo.db.pick_man_offense.find_one({'PLAYER_NAME': player})
+    elif strategy == 'post up':
+        playerInfo = mongo.db.post_up_offense.find_one({'PLAYER_NAME': player})
+    elif strategy == 'spot up':
+        playerInfo = mongo.db.spot_up_offense.find_one({'PLAYER_NAME': player})
+
+    return playerInfo['EFG_PCT'] if playerInfo else 0
+
+def getDefenseEfg(player, strategy):
+    playerInfo = {}
+
+    if strategy == 'handoff':
+        playerInfo = mongo.db.handoff_defense.find_one({'PLAYER_NAME': player})
+    elif strategy == 'isolation':
+        playerInfo = mongo.db.isolation_defense.find_one({'PLAYER_NAME': player})
+    elif strategy == 'off screen':
+        playerInfo = mongo.db.off_screen_defense.find_one({'PLAYER_NAME': player})
+    elif strategy == 'pick handler':
+        playerInfo = mongo.db.pick_handler_defense.find_one({'PLAYER_NAME': player})
+    elif strategy == 'pick man':
+        playerInfo = mongo.db.pick_man_defense.find_one({'PLAYER_NAME': player})
+    elif strategy == 'post up':
+        playerInfo = mongo.db.post_up_defense.find_one({'PLAYER_NAME': player})
+    elif strategy == 'spot up':
+        playerInfo = mongo.db.spot_up_defense.find_one({'PLAYER_NAME': player})
+
+    return playerInfo['EFG_PCT'] if playerInfo else 0
+
+def getScore (offensePlayer, defensePlayer, strategy):
+    p = getOffenseEfg(offensePlayer, strategy)
+    q = 1- getDefenseEfg(defensePlayer, strategy)
+    scorePct = (p-p*q) / (p+q-2*p*q)
+    threshold = 10 if scorePct < 0 else scorePct *100
+
+    d = random.randint(0,100)
+
+    return d < threshold
+
+
 if __name__ == "__main__":
-    app.run()
+    socketio.run(app)
