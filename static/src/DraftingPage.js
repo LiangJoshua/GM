@@ -137,7 +137,7 @@ class DraftingPage extends Component {
                                 p.name
                               ),
                               submission:
-                                this.state.draftedPlayers.length + 1 === 5
+                                this.state.draftedPlayers.length + 1 === 12
                                   ? true
                                   : false
                             });
@@ -177,7 +177,7 @@ class DraftingPage extends Component {
           <Grid container direction="column" justify="space-evenly">
             <div style={{ textAlign: "center" }}>
               <h1 style={{ color: "#FFF" }}>
-                Your Players ({this.state.draftedPlayers.length}/5)
+                Your Players ({this.state.draftedPlayers.length}/12)
               </h1>
 
               {this.state.draftedPlayers.map(drafted => {
@@ -244,7 +244,7 @@ class DraftingPage extends Component {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                You have drafted 5 players. Click 'Submit' to view your winning
+                You have drafted 12 players. Click 'Submit' to view your winning
                 probability.
               </DialogContentText>
             </DialogContent>
