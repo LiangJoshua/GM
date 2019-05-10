@@ -1,6 +1,6 @@
 export const players = [
   {
-    name: "Lebron James",
+    name: "LeBron James",
     info: {
       img: require("../img/LebronJames.png"),
       basicInfo: {
@@ -798,7 +798,7 @@ export const players = [
     }
   },
   {
-    name: "Demarcus Cousins",
+    name: "DeMarcus Cousins",
     info: {
       img: require("../img/DemarcusCousins.png"),
       basicInfo: {
