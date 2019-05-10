@@ -137,7 +137,7 @@ class DraftingPage extends Component {
                                 p.name
                               ),
                               submission:
-                                this.state.draftedPlayers.length + 1 === 12
+                                this.state.draftedPlayers.length + 1 === 5
                                   ? true
                                   : false
                             });
