@@ -18,8 +18,8 @@ const styles = {
     height: 150
   },
   gridlist: {
-    width: 500,
-    height: 450
+    flexWrap: "nowrap",
+    textAlign: "center"
   },
   grid: {
     paddingTop: "50px",
@@ -57,12 +57,7 @@ class Profile extends Component {
     return (
       <Grid container direction="column" justify="center" alignItems="center">
         {this.state.loggedIn ? (
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
+          <div>
             <Avatar
               alt={this.props.user.name}
               src={this.props.user.imageUrl}
@@ -73,7 +68,7 @@ class Profile extends Component {
               Your team
             </Typography>
             <div style={styles.grid}>
-              <GridList cols={3} style={styles.gridlist} cellHeight={160}>
+              <GridList cols={3.5} style={styles.gridlist}>
                 {this.state.draftedPlayers.map(drafted => {
                   const playerInfo = players.find(
                     player => player.name == drafted
@@ -88,7 +83,7 @@ class Profile extends Component {
                 ;
               </GridList>
             </div>
-          </Grid>
+          </div>
         ) : (
           <Typography>Please log in!</Typography>
         )}

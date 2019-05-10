@@ -81,8 +81,7 @@ class Interactive extends Component {
       this.socket.emit("SEND_MESSAGE", {
         user: this.props.user.imageUrl,
         userName: this.props.user.name,
-        action: this.state.move,
-        player: this.state.player
+        action: this.state.move + " with " + this.state.player
       });
       this.setState({
         defense: !this.state.defense
@@ -94,9 +93,8 @@ class Interactive extends Component {
       this.socket.emit("SEND_SCORE", {
         user: this.props.user.imageUrl,
         userName: this.props.user.name,
-        player: this.state.player,
-        action: null,
-        pastMove: this.state.moves[this.state.moves.length - 1]
+        action: "Guard with " + this.state.player,
+        opponent: this.state.opponent
       });
       this.setState({
         defense: !this.state.defense
@@ -181,10 +179,7 @@ class Interactive extends Component {
                   <Grid container direction="row">
                     <Avatar src={move.user} />
                     <Typography variant="h6" style={styles.move}>
-                      {move.userName}:{" "}
-                      {move.action
-                        ? move.action + " with " + move.player
-                        : "Guard with " + move.player}
+                      {move.userName}: {move.action}
                     </Typography>
                   </Grid>
                 </Paper>
