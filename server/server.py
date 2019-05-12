@@ -54,17 +54,18 @@ def store_team():
     return jsonify(winning_probability(data['team']))
 
 def find_player_stats(playerName):
-    searchPhrase = "\""+playerName+"\""
-    playerInfo = mongo.db.players.find_one({'$text': {'$search': searchPhrase} })
+    #searchPhrase = "\""+playerName+"\""
+    #playerInfo = mongo.db.players.find_one({'$text': {'$search': searchPhrase} })
+    playerInfo = mongo.db.players_48.find_one({'PLAYER_NAME': playerName})
 
-    playerStats = {"FGP": 0 if isinstance (playerInfo["FG%"], str) else playerInfo["FG%"],
-    "TPP":0 if isinstance (playerInfo["3P%"], str) else playerInfo["3P%"],
+    playerStats = {"FGP": 0 if isinstance (playerInfo["FGP"], str) else playerInfo["FGP"],
+    "TPP":0 if isinstance (playerInfo["TPP"], str) else playerInfo["TPP"],
     "TRB":0 if isinstance (playerInfo["TRB"], str) else playerInfo["TRB"],
     "STL": 0 if isinstance (playerInfo["STL"], str) else playerInfo["STL"],
     "TOV": 0 if isinstance (playerInfo["TOV"], str) else playerInfo["TOV"],
     "AST": 0 if isinstance (playerInfo["AST"], str) else playerInfo["AST"]}
 
-    print(playerInfo)
+    print(playerStats)
 
     return playerStats
 
@@ -126,7 +127,7 @@ def send_score(json_data):
     pastMove = json_data['pastMove']
     result = getScore(pastMove['player'], json_data['player'], pastMove['action'])
     score = {}
-    
+
     if result:
         score["action"] = pastMove['player'] +" scores!"
         emit('RECEIVE_SCORE', pastMove['userName'], broadcast=True)
