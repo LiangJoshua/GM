@@ -86,8 +86,8 @@ def calculate_averages(listOfPlayers):
         averages["TOV"] = averages["TOV"] + p_stats["TOV"]
         averages["AST"] = averages["AST"] + p_stats["AST"]
 
-    averages["FGP"] = averages["FGP"] /12
-    averages["TPP"] = averages["TPP"]/12
+    averages["FGP"] = averages["FGP"] /5
+    averages["TPP"] = averages["TPP"]/5
 
 
     print (averages)
